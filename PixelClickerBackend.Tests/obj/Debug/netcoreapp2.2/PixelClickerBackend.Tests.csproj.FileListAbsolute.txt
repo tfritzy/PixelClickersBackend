@@ -1,0 +1,17 @@
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.Tests.deps.json
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.Tests.runtimeconfig.json
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.Tests.runtimeconfig.dev.json
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.Tests.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.Tests.pdb
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.csprojAssemblyReference.cache
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.csproj.CoreCompileInputs.cache
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.AssemblyInfoInputs.cache
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.AssemblyInfo.cs
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.pdb
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.dll
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\bin\Debug\netcoreapp2.2\PixelClickerBackend.pdb
+C:\development\PixelClickerBackend\PixelClickerBackend.Tests\obj\Debug\netcoreapp2.2\PixelClickerBackend.Tests.csproj.CopyComplete
