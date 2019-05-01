@@ -4,11 +4,10 @@ namespace PixelClickerBackend
 {
     public class Emerald : Gem
     {
-        public Emerald(int tier)
+        public Emerald(int tier) : base(tier)
         {
             this.type = GemType.Emerald;
-            this.tier = tier;
-            this.attributes = GetAttributes();
+            this.element = Elements.Nature;
         }
 
         public override Attribute[] GetAttributes()

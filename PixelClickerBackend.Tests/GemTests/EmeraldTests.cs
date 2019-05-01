@@ -18,6 +18,12 @@ namespace PixelClickerBackend.Tests
         #endregion
 
         [Fact]
+        public void TestEmeraldElementType()
+        {
+            Gem emerald = new Emerald(3);
+            Assert.Equal(emerald.element, Elements.Nature);
+        }
+        [Fact]
         public void TestTier1Emerald()
         {
             int tier = 1;
@@ -27,11 +33,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 5;
+            BigInteger expectedDamageIncrease = new BigInteger(5);
             float expectedGemDropChanceIncrease = 0f;
             float expectedEnemyLifeReduction = 0f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -52,11 +58,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 10;
+            BigInteger expectedDamageIncrease = new BigInteger(10);
             float expectedGemDropChanceIncrease = 0f;
             float expectedEnemyLifeReduction = 0f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -77,11 +83,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 20;
+            BigInteger expectedDamageIncrease = new BigInteger(20);
             float expectedGemDropChanceIncrease = 1f;
             float expectedEnemyLifeReduction = 0f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -102,11 +108,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 40;
+            BigInteger expectedDamageIncrease = new BigInteger(40);
             float expectedGemDropChanceIncrease = 2f;
             float expectedEnemyLifeReduction = 0f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -127,11 +133,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 80;
+            BigInteger expectedDamageIncrease = new BigInteger(80);
             float expectedGemDropChanceIncrease = 4f;
             float expectedEnemyLifeReduction = 1f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -153,11 +159,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 160;
+            BigInteger expectedDamageIncrease = new BigInteger(160);
             float expectedGemDropChanceIncrease = 8f;
             float expectedEnemyLifeReduction = 2f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -178,11 +184,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 320;
+            BigInteger expectedDamageIncrease = new BigInteger(320);
             float expectedGemDropChanceIncrease = 16f;
             float expectedEnemyLifeReduction = 4f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -203,11 +209,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 640;
+            BigInteger expectedDamageIncrease = new BigInteger(640);
             float expectedGemDropChanceIncrease = 32f;
             float expectedEnemyLifeReduction = 8f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -228,11 +234,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 1280;
+            BigInteger expectedDamageIncrease = new BigInteger(1280);
             float expectedGemDropChanceIncrease = 64f;
             float expectedEnemyLifeReduction = 16f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -253,11 +259,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 2560;
-            float expectedGemDropChanceIncrease = 128f;
+            BigInteger expectedDamageIncrease = new BigInteger(2560);
+            float expectedGemDropChanceIncrease = 100f;
             float expectedEnemyLifeReduction = 32f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -278,11 +284,11 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            int expectedDamageIncrease = 2621440;
-            float expectedGemDropChanceIncrease = 131072f;
+            BigInteger expectedDamageIncrease = new BigInteger(2621440);
+            float expectedGemDropChanceIncrease = 100f;
             float expectedEnemyLifeReduction = 90f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
@@ -303,28 +309,21 @@ namespace PixelClickerBackend.Tests
 
             Assert.Equal(emerald.tier, tier);
 
-            BigInteger expectedDamageIncrease = new BigInteger(2);
-            BigInteger.Pow(expectedDamageIncrease, tier);
-            BigInteger.Multiply(expectedDamageIncrease, 5);
+            BigInteger expectedDamageIncrease = new BigInteger(5);
+            expectedDamageIncrease = BigInteger.Multiply(BigInteger.Pow(2, tier - 1), expectedDamageIncrease);
 
-            float expectedGemDropChanceIncrease = 50;
+            float expectedGemDropChanceIncrease = 100;
             float expectedEnemyLifeReduction = 90f;
 
-            int prevPlayerDamge = player.passiveNatureDPS;
+            BigInteger prevPlayerDamge = player.passiveNatureDPS;
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
             emerald.Apply(player);
 
-            Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
+            Assert.Equal(BigInteger.Add(prevPlayerDamge, expectedDamageIncrease), player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
             Assert.Equal(prevEnemyLifeReduction + expectedEnemyLifeReduction, player.enemyHealthPercentageReduction);
         }
-
-
-
-
-
-
     }
 }

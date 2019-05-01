@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 
 namespace PixelClickerBackend
 {
@@ -6,7 +7,9 @@ namespace PixelClickerBackend
     {
         public override void Apply(Player player)
         {
-            player.passiveNatureDPS += (int)(5.0 * Math.Pow(2.0, (double)(this.tier - 1)));
+            BigInteger damageIncrease = new BigInteger(5);
+            damageIncrease = BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), damageIncrease);
+            player.passiveNatureDPS += damageIncrease;
         }
 
         public NatureDamageAttribute(int tier) : base(tier)
