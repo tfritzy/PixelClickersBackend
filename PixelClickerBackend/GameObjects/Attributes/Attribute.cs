@@ -4,12 +4,35 @@ namespace PixelClickerBackend
     {
         public string name;
         public string description;
-        public abstract void Apply(Player player);
+        protected Player player;
         protected int tier;
-        
-        public Attribute(int tier)
+        public bool isActive;
+
+        public Attribute(int tier, Player player)
         {
             this.tier = tier;
+            this.player = player;
         }
+
+        public void ApplyEffect()
+        {
+            if (isActive)
+            {
+                return;
+            }
+            isActive = true;
+            Apply();
+        }
+
+        public void RemoveEffect()
+        {
+            if (!isActive)
+                return;
+            isActive = false;
+            Remove();
+        }
+
+        protected abstract void Apply();
+        protected abstract void Remove();
     }
 }

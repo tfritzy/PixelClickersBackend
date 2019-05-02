@@ -21,5 +21,8 @@ namespace PixelClickerBackend
         public float enemyHealthPercentageReduction;
         public BigInteger extraGoldFindPercentage;
         public BigInteger teamDamageBonusPercent;
+        public float critHitChance;
+        public float critHitDamage;
+        public float damageIncreasePercentage;
     }
 }

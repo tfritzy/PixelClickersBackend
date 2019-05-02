@@ -11,7 +11,7 @@ namespace PixelClickerBackend.Tests
         [Fact]
         public void TestEmeraldBasics()
         {
-            Gem emerald = new Emerald(5);
+            Gem emerald = new Emerald(5, new Player());
             Assert.Equal(GemType.Emerald, emerald.type);
             Assert.Equal(5, emerald.tier);
         }
@@ -20,7 +20,7 @@ namespace PixelClickerBackend.Tests
         [Fact]
         public void TestEmeraldElementType()
         {
-            Gem emerald = new Emerald(3);
+            Gem emerald = new Emerald(3, new Player());
             Assert.Equal(emerald.element, Elements.Nature);
         }
         [Fact]
@@ -28,8 +28,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 1;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -41,7 +41,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -53,8 +53,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 2;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -66,7 +66,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -78,8 +78,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 3;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -91,7 +91,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -103,8 +103,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 4;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -116,7 +116,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -128,8 +128,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 5;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -141,7 +141,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -154,8 +154,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 6;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -167,7 +167,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -179,8 +179,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 7;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -192,7 +192,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -204,8 +204,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 8;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -217,7 +217,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -229,8 +229,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 9;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -242,7 +242,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -254,8 +254,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 10;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -267,7 +267,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -279,8 +279,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 20;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -292,7 +292,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(prevPlayerDamge + expectedDamageIncrease, player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);
@@ -304,8 +304,8 @@ namespace PixelClickerBackend.Tests
         {
             int tier = 100;
 
-            Gem emerald = new Emerald(tier);
             Player player = new Player();
+            Gem emerald = new Emerald(tier, player);
 
             Assert.Equal(emerald.tier, tier);
 
@@ -319,7 +319,7 @@ namespace PixelClickerBackend.Tests
             float prevGemDropChance = player.gemDropChance;
             float prevEnemyLifeReduction = player.enemyHealthPercentageReduction;
 
-            emerald.Apply(player);
+            emerald.Apply();
 
             Assert.Equal(BigInteger.Add(prevPlayerDamge, expectedDamageIncrease), player.passiveNatureDPS);
             Assert.Equal(prevGemDropChance + expectedGemDropChanceIncrease, player.gemDropChance);

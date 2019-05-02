@@ -4,15 +4,24 @@ namespace PixelClickerBackend
 {
     public class EnemyLifeReductionAttribute : Attribute
     {
-        public override void Apply(Player player)
+
+        public EnemyLifeReductionAttribute(int tier, Player player) : base(tier, player)
+        {
+
+        }
+
+        protected override void Apply()
         {
             player.enemyHealthPercentageReduction += (float)Math.Max(0, Math.Pow(2.0, this.tier - 5));
             if (player.enemyHealthPercentageReduction >= 90f)
                 player.enemyHealthPercentageReduction = 90f;
         }
-        public EnemyLifeReductionAttribute(int tier) : base(tier)
-        {
 
+        protected override void Remove()
+        {
+            player.enemyHealthPercentageReduction -= (float)Math.Max(0, Math.Pow(2.0, this.tier - 5));
+            if (player.enemyHealthPercentageReduction <= 0f)
+                player.enemyHealthPercentageReduction = 0f;
         }
     }
 }

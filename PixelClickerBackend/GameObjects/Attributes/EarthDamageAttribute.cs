@@ -3,10 +3,10 @@ using System.Numerics;
 
 namespace PixelClickerBackend
 {
-    public class FireDamageAttribute : Attribute
+    public class EarthDamageAttribute : Attribute
     {
 
-        public FireDamageAttribute(int tier, Player player) : base(tier, player)
+        public EarthDamageAttribute(int tier, Player player) : base(tier, player)
         {
 
         }
@@ -15,14 +15,14 @@ namespace PixelClickerBackend
         {
             BigInteger damageIncrease = new BigInteger(5);
             damageIncrease = BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), damageIncrease);
-            player.passiveFireDPS += damageIncrease;
+            player.passiveEarthDPS += damageIncrease;
         }
 
         protected override void Remove()
         {
             BigInteger damageChange = new BigInteger(5);
             damageChange = BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), damageChange);
-            player.passiveFireDPS -= damageChange;
+            player.passiveEarthDPS -= damageChange;
         }
 
     }
