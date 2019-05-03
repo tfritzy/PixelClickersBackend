@@ -12,16 +12,19 @@ namespace PixelClickerBackend
 
         protected override void Apply()
         {
-            BigInteger damageIncrease = new BigInteger(5);
-            damageIncrease = BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), damageIncrease);
-            player.passiveNatureDPS += damageIncrease;
+            player.passiveNatureDPS = BigInteger.Add(player.passiveNatureDPS, (BigInteger)GetEffectQuantity());
         }
 
         protected override void Remove()
         {
+            
+            player.passiveNatureDPS = BigInteger.Subtract(player.passiveNatureDPS, (BigInteger)GetEffectQuantity());
+        }
+
+        public override object GetEffectQuantity()
+        {
             BigInteger damageIncrease = new BigInteger(5);
-            damageIncrease = BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), damageIncrease);
-            player.passiveNatureDPS -= damageIncrease;
+            return BigInteger.Multiply(damageIncrease, BigInteger.Pow(2, this.tier - 1));
         }
 
     }

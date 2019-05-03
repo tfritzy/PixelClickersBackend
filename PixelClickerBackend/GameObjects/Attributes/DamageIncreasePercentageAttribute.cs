@@ -13,14 +13,17 @@ namespace PixelClickerBackend
 
         protected override void Apply()
         {
-            player.damageIncreasePercentage += this.tier * 100;
+            player.damageIncreasePercentage += (float)GetEffectQuantity();
         }
 
         protected override void Remove()
         {
-            player.critHitChance -= this.tier * 100;
-            if (player.damageIncreasePercentage < 0)
-                player.damageIncreasePercentage = 0;
+            player.damageIncreasePercentage -= (float)GetEffectQuantity();
+        }
+
+        public override object GetEffectQuantity()
+        {
+            return (float)(this.tier * 100);
         }
 
     }

@@ -24,5 +24,11 @@ namespace PixelClickerBackend
         public float critHitChance;
         public float critHitDamage;
         public float damageIncreasePercentage;
+        public BigInteger percentExtraXPPerKill;
+        public float cooldownReduction;
+
+        public Player(){
+        
+        }
     }
 }

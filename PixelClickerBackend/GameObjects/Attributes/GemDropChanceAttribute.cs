@@ -13,16 +13,17 @@ namespace PixelClickerBackend
 
         protected override void Apply()
         {
-            player.gemDropChance += (float)Math.Max(0, Math.Pow(2.0, this.tier - 3.0));
-            if (player.gemDropChance >= 100)
-                player.gemDropChance = 100;
+            player.gemDropChance += (float)GetEffectQuantity();
         }
 
         protected override void Remove()
         {
-            player.gemDropChance -= (float)Math.Max(0, Math.Pow(2.0, this.tier - 3.0));
-            if (player.gemDropChance < 0)
-                player.gemDropChance = 0;
+            player.gemDropChance -= (float)GetEffectQuantity();
+        }
+
+        public override object GetEffectQuantity()
+        {
+            return (float)(2 * this.tier);
         }
 
     }

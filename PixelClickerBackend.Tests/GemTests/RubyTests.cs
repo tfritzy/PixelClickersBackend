@@ -38,11 +38,11 @@ namespace PixelClickerBackend.Tests
         [Fact]
         public void TestRubyAttributes()
         {
-            Gem topaz = new Topaz(3, new Player());
-            Assert.Equal(topaz.GetAttributeCount(), 3);
-            Assert.True(DoesListContainAttribute(topaz, typeof(FireDamageAttribute)));
-            Assert.True(DoesListContainAttribute(topaz, typeof(GoldFindPercentageAttribute)));
-            Assert.True(DoesListContainAttribute(topaz, typeof(ExtraTeamDamageAttribute)));
+            Gem ruby = new Ruby(3, new Player());
+            Assert.Equal(3, ruby.GetAttributeCount());
+            Assert.True(DoesListContainAttribute(ruby, typeof(FireDamageAttribute)));
+            Assert.True(DoesListContainAttribute(ruby, typeof(GoldFindPercentageAttribute)));
+            Assert.True(DoesListContainAttribute(ruby, typeof(ExtraTeamDamageAttribute)));
         }
 
 
@@ -128,12 +128,13 @@ namespace PixelClickerBackend.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                int tier = random.Next(1, 1000000);
+                int tier = random.Next(1, 1000);
 
                 Player testPlayer = new Player();
                 Gem ruby = new Ruby(tier, testPlayer);
 
-                BigInteger expectedFireDPSIncrease = BigInteger.Multiply(5, BigInteger.Pow(2, tier - 1));
+                BigInteger expectedFireDPSIncrease = BigInteger.Multiply(5, 
+                                                        BigInteger.Pow(2, tier - 1));
                 BigInteger expectedGoldFindIncrease = BigInteger.Pow(2, tier);
                 BigInteger expectedExtraTeamDamge = BigInteger.Pow(2, tier - 1);
 
@@ -141,19 +142,18 @@ namespace PixelClickerBackend.Tests
                 BigInteger prevPlayerGoldFind = testPlayer.extraGoldFindPercentage;
                 BigInteger extraTeamDamge = testPlayer.teamDamageBonusPercent;
 
-                ruby.Remove();
-                ruby.Remove();
-                ruby.Apply();
-                ruby.Apply();
-                ruby.Remove();
-                ruby.Apply();
-                ruby.Remove();
-                ruby.Apply();
-                ruby.Apply();
-                ruby.Remove();
-                ruby.Remove();
-                ruby.Apply();
 
+                Random r = new Random();
+                for (int j = 0; j < 1000; j++)
+                {
+                    if (r.Next(0, 2) == 1)
+                    {
+                        ruby.Apply();
+                    }
+                    else
+                        ruby.Remove();
+                }
+                ruby.Apply();
 
                 Assert.Equal(BigInteger.Add(prevPlayerFireDamage, expectedFireDPSIncrease), testPlayer.passiveFireDPS);
                 Assert.Equal(prevPlayerGoldFind + expectedGoldFindIncrease, testPlayer.extraGoldFindPercentage);

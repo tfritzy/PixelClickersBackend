@@ -12,6 +12,7 @@ namespace PixelClickerBackend
         {
             this.tier = tier;
             this.player = player;
+            this.isActive = false;
         }
 
         public void ApplyEffect()
@@ -32,6 +33,8 @@ namespace PixelClickerBackend
             Remove();
         }
 
+
+        public abstract object GetEffectQuantity();
         protected abstract void Apply();
         protected abstract void Remove();
     }
