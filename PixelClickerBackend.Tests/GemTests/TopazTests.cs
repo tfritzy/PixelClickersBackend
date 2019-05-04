@@ -49,7 +49,7 @@ namespace PixelClickerBackend.Tests
                 EarthDamageAttribute earthDamage = new EarthDamageAttribute(i, testPlayer);
                 CritHitChanceAttribute critHitChance =
                     new CritHitChanceAttribute(i, testPlayer);
-                DamageIncreasePercentageAttribute damageIncrease = 
+                DamageIncreasePercentageAttribute damageIncrease =
                     new DamageIncreasePercentageAttribute(i, testPlayer);
 
                 Assert.Equal(0, testPlayer.passiveNatureDPS);
@@ -60,7 +60,7 @@ namespace PixelClickerBackend.Tests
                 Gem topaz = new Topaz(i, testPlayer);
 
                 Random r = new Random();
-                for (int j = 0; j < 1000;j++)
+                for (int j = 0; j < 1000; j++)
                 {
                     if (r.Next(0, 2) == 1)
                     {
@@ -71,9 +71,9 @@ namespace PixelClickerBackend.Tests
                 }
                 topaz.Apply();
 
-                Assert.Equal(testPlayer.passiveEarthDPS, 
+                Assert.Equal(testPlayer.passiveEarthDPS,
                     (BigInteger)earthDamage.GetEffectQuantity());
-                Assert.Equal(testPlayer.critHitChance, 
+                Assert.Equal(testPlayer.critHitChance,
                     (float)critHitChance.GetEffectQuantity());
                 Assert.Equal(testPlayer.damageIncreasePercentage,
                     (float)damageIncrease.GetEffectQuantity());

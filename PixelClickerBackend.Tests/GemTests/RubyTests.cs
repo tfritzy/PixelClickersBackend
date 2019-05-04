@@ -58,110 +58,46 @@ namespace PixelClickerBackend.Tests
         }
 
         [Fact]
-        public void TestTierRubyPower()
+        public void TestRubyAttributesAtLevels()
         {
-            for (int i = 1; i < 1000; i += 5)
+
+            for (int i = 1; i < 10000; i += i)
             {
                 Player testPlayer = new Player();
-                Gem ruby = new Ruby(i, testPlayer);
+                FireDamageAttribute wda = new FireDamageAttribute(i, testPlayer);
+                GoldFindPercentageAttribute pxp =
+                    new GoldFindPercentageAttribute(i, testPlayer);
+                ExtraTeamDamageAttribute cdr = new ExtraTeamDamageAttribute(i, testPlayer);
 
-                BigInteger expectedFireDPSIncrease = BigInteger.Multiply(5, BigInteger.Pow(2, i - 1));
-                BigInteger expectedGoldFindIncrease = BigInteger.Pow(2, i);
-                BigInteger expectedExtraTeamDamge = BigInteger.Pow(2, i - 1);
-
-                BigInteger prevPlayerFireDamage = testPlayer.passiveFireDPS;
-                BigInteger prevPlayerGoldFind = testPlayer.extraGoldFindPercentage;
-                BigInteger extraTeamDamge = testPlayer.teamDamageBonusPercent;
-
-                ruby.Apply();
-
-                Assert.Equal(BigInteger.Add(prevPlayerFireDamage, expectedFireDPSIncrease), testPlayer.passiveFireDPS);
-                Assert.Equal(prevPlayerGoldFind + expectedGoldFindIncrease, testPlayer.extraGoldFindPercentage);
-                Assert.Equal(extraTeamDamge + expectedExtraTeamDamge, testPlayer.teamDamageBonusPercent);
-            }
-        }
-
-        [Fact]
-        public void TestTier0Ruby()
-        {
-            Assert.Throws<ArgumentException>(() => new Ruby(0, new Player()));
-        }
+                Assert.Equal(0, testPlayer.passiveNatureDPS);
+                Assert.Equal(0, testPlayer.passiveEarthDPS);
+                Assert.Equal(0, testPlayer.passiveFireDPS);
+                Assert.Equal(0, testPlayer.passiveWaterDPS);
 
 
-        [Fact]
-        public void TestMultiApplyRuby()
-        {
-            Random random = new Random();
-
-            for (int i = 0; i < 10; i++)
-            {
-                int tier = random.Next(1, 1000000);
-
-                Player testPlayer = new Player();
-                Gem ruby = new Ruby(tier, testPlayer);
-
-                BigInteger expectedFireDPSIncrease = BigInteger.Multiply(5, BigInteger.Pow(2, tier - 1));
-                BigInteger expectedGoldFindIncrease = BigInteger.Pow(2, tier);
-                BigInteger expectedExtraTeamDamge = BigInteger.Pow(2, tier - 1);
-
-                BigInteger prevPlayerFireDamage = testPlayer.passiveFireDPS;
-                BigInteger prevPlayerGoldFind = testPlayer.extraGoldFindPercentage;
-                BigInteger extraTeamDamge = testPlayer.teamDamageBonusPercent;
-
-                for (int j = 1; j < random.Next(2, 10); j++)
-                {
-                    ruby.Apply();
-                }
-
-                Assert.Equal(BigInteger.Add(prevPlayerFireDamage, expectedFireDPSIncrease), testPlayer.passiveFireDPS);
-                Assert.Equal(prevPlayerGoldFind + expectedGoldFindIncrease, testPlayer.extraGoldFindPercentage);
-                Assert.Equal(extraTeamDamge + expectedExtraTeamDamge, testPlayer.teamDamageBonusPercent);
-            }
-
-        }
-
-
-        [Fact]
-        public void TestMultiApplyAndRemoveRuby()
-        {
-            Random random = new Random();
-
-            for (int i = 0; i < 10; i++)
-            {
-                int tier = random.Next(1, 1000);
-
-                Player testPlayer = new Player();
-                Gem ruby = new Ruby(tier, testPlayer);
-
-                BigInteger expectedFireDPSIncrease = BigInteger.Multiply(5, 
-                                                        BigInteger.Pow(2, tier - 1));
-                BigInteger expectedGoldFindIncrease = BigInteger.Pow(2, tier);
-                BigInteger expectedExtraTeamDamge = BigInteger.Pow(2, tier - 1);
-
-                BigInteger prevPlayerFireDamage = testPlayer.passiveFireDPS;
-                BigInteger prevPlayerGoldFind = testPlayer.extraGoldFindPercentage;
-                BigInteger extraTeamDamge = testPlayer.teamDamageBonusPercent;
-
-
+                Gem s = new Ruby(i, testPlayer);
                 Random r = new Random();
                 for (int j = 0; j < 1000; j++)
                 {
                     if (r.Next(0, 2) == 1)
                     {
-                        ruby.Apply();
+                        s.Apply();
                     }
                     else
-                        ruby.Remove();
+                        s.Remove();
                 }
-                ruby.Apply();
+                s.Apply();
 
-                Assert.Equal(BigInteger.Add(prevPlayerFireDamage, expectedFireDPSIncrease), testPlayer.passiveFireDPS);
-                Assert.Equal(prevPlayerGoldFind + expectedGoldFindIncrease, testPlayer.extraGoldFindPercentage);
-                Assert.Equal(extraTeamDamge + expectedExtraTeamDamge, testPlayer.teamDamageBonusPercent);
+                Assert.Equal((BigInteger)wda.GetEffectQuantity(), testPlayer.passiveFireDPS);
+                Assert.Equal((BigInteger)pxp.GetEffectQuantity(),
+                    testPlayer.extraGoldFindPercentage);
+                Assert.Equal((BigInteger)cdr.GetEffectQuantity(), (testPlayer.teamDamageBonusPercent));
+
+
             }
 
-        }
 
+        }
 
 
     }

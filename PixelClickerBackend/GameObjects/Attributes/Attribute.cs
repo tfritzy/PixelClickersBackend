@@ -5,7 +5,7 @@ namespace PixelClickerBackend
         public string name;
         public string description;
         protected Player player;
-        protected int tier;
+        public int tier;
         public bool isActive;
 
         public Attribute(int tier, Player player)

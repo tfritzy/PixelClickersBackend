@@ -23,7 +23,7 @@ namespace PixelClickerBackend
 
         public override object GetEffectQuantity()
         {
-            return (float)(this.tier * 100);
+            return (float)(this.tier * 30);
         }
 
     }
