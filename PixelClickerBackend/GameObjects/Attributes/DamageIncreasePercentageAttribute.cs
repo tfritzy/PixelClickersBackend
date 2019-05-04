@@ -1,5 +1,5 @@
 using System;
-
+using System.Numerics;
 namespace PixelClickerBackend
 {
     public class DamageIncreasePercentageAttribute : Attribute
@@ -13,17 +13,17 @@ namespace PixelClickerBackend
 
         protected override void Apply()
         {
-            player.damageIncreasePercentage += (float)GetEffectQuantity();
+            player.damageIncreasePercentage += (BigInteger)GetEffectQuantity();
         }
 
         protected override void Remove()
         {
-            player.damageIncreasePercentage -= (float)GetEffectQuantity();
+            player.damageIncreasePercentage -= (BigInteger)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()
         {
-            return (float)(this.tier * 30);
+            return BigInteger.Multiply(this.tier, 30);
         }
 
     }

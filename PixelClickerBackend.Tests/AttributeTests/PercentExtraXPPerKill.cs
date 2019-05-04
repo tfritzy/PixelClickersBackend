@@ -9,6 +9,56 @@ namespace PixelClickerBackend
 
     public class PercentExtraXPPerKillTests
     {
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new PercentExtraXPPerKillAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new PercentExtraXPPerKillAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.percentExtraXPPerKill);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.percentExtraXPPerKill);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new PercentExtraXPPerKillAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new PercentExtraXPPerKillAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.percentExtraXPPerKill);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.percentExtraXPPerKill);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new PercentExtraXPPerKillAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.percentExtraXPPerKill);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new PercentExtraXPPerKillAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.percentExtraXPPerKill);
+            
+            }
+        }
+        #endregion
 
         [Fact]
         public void TestLevel1()

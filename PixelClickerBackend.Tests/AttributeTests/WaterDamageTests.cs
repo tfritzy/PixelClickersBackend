@@ -9,6 +9,56 @@ namespace PixelClickerBackend
 
     public class passiveWaterDPSTests
     {
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new WaterDamageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new WaterDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveWaterDPS);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveWaterDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new WaterDamageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new WaterDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveWaterDPS);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveWaterDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new WaterDamageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveWaterDPS);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new WaterDamageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveWaterDPS);
+            
+            }
+        }
+        #endregion
 
         [Fact]
         public void TestLevel1()
@@ -95,6 +145,18 @@ namespace PixelClickerBackend
         }
 
         [Fact]
+        public void TestLevelMaxInt()
+        {
+            Player testPlayer = new Player();
+            WaterDamageAttribute attr =
+                new WaterDamageAttribute(int.MaxValue, testPlayer);
+            Assert.Equal(int.MaxValue, attr.tier);
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), attr.GetEffectQuantity());
+            attr.ApplyEffect();
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), testPlayer.passiveWaterDPS);
+        }
+
+        [Fact]
         public void TestActive()
         {
             Player testPlayer = new Player();
@@ -133,7 +195,7 @@ namespace PixelClickerBackend
         }
 
         private BigInteger applyFormula(int tier){
-            return BigInteger.Multiply(new BigInteger(5), BigInteger.Pow(2, tier-1));
+            return BigInteger.Multiply(new BigInteger(tier), new BigInteger(tier));
         }
 
 

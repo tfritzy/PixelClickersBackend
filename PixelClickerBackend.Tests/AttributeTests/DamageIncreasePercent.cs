@@ -10,6 +10,57 @@ namespace PixelClickerBackend
     public class damageIncreasePercentageTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new DamageIncreasePercentageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new DamageIncreasePercentageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.damageIncreasePercentage);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.damageIncreasePercentage);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new DamageIncreasePercentageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new DamageIncreasePercentageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.damageIncreasePercentage);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.damageIncreasePercentage);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new DamageIncreasePercentageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.damageIncreasePercentage);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new DamageIncreasePercentageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.damageIncreasePercentage);
+            
+            }
+        }
+        #endregion
+
         [Fact]
         public void TestLevel1()
         {
@@ -129,11 +180,23 @@ namespace PixelClickerBackend
             attr.ApplyEffect();
             Assert.Equal(applyFormula(10), testPlayer.damageIncreasePercentage);
             attr.RemoveEffect();
-            Assert.Equal(0f, testPlayer.damageIncreasePercentage);
+            Assert.Equal(new BigInteger(0), testPlayer.damageIncreasePercentage);
         }
 
-        private float applyFormula(int tier){
-            return tier * 30;
+        [Fact]
+        public void TestLevelMaxInt()
+        {
+            Player testPlayer = new Player();
+            DamageIncreasePercentageAttribute attr =
+                new DamageIncreasePercentageAttribute(int.MaxValue, testPlayer);
+            Assert.Equal(int.MaxValue, attr.tier);
+            Assert.Equal(BigInteger.Parse("64424509410"), attr.GetEffectQuantity());
+            attr.ApplyEffect();
+            Assert.Equal(BigInteger.Parse("64424509410"), testPlayer.damageIncreasePercentage);
+        }
+
+        private BigInteger applyFormula(int tier){
+            return BigInteger.Multiply(tier, 30);
         }
 
 

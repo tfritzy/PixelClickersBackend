@@ -76,7 +76,7 @@ namespace PixelClickerBackend.Tests
                 Assert.Equal(testPlayer.critHitChance,
                     (float)critHitChance.GetEffectQuantity());
                 Assert.Equal(testPlayer.damageIncreasePercentage,
-                    (float)damageIncrease.GetEffectQuantity());
+                    (BigInteger)damageIncrease.GetEffectQuantity());
             }
         }
 

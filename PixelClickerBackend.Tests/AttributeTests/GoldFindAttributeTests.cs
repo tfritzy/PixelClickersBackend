@@ -10,6 +10,58 @@ namespace PixelClickerBackend
     public class GoldFindPercentageAttributeTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new GoldFindPercentageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new GoldFindPercentageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.extraGoldFindPercentage);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.extraGoldFindPercentage);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new GoldFindPercentageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new GoldFindPercentageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.extraGoldFindPercentage);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.extraGoldFindPercentage);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new GoldFindPercentageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.extraGoldFindPercentage);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new GoldFindPercentageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.extraGoldFindPercentage);
+            
+            }
+        }
+        #endregion
+
+
         [Fact]
         public void TestLevel1()
         {

@@ -10,6 +10,58 @@ namespace PixelClickerBackend
     public class PassiveFireDPSTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new FireDamageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new FireDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveFireDPS);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveFireDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new FireDamageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new FireDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveFireDPS);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveFireDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new FireDamageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveFireDPS);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new FireDamageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveFireDPS);
+            
+            }
+        }
+        #endregion
+
+
         [Fact]
         public void TestLevel1()
         {
@@ -132,8 +184,20 @@ namespace PixelClickerBackend
             Assert.Equal(new BigInteger(0), testPlayer.passiveFireDPS);
         }
 
+        [Fact]
+        public void TestLevelMaxInt()
+        {
+            Player testPlayer = new Player();
+            FireDamageAttribute attr =
+                new FireDamageAttribute(int.MaxValue, testPlayer);
+            Assert.Equal(int.MaxValue, attr.tier);
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), attr.GetEffectQuantity());
+            attr.ApplyEffect();
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), testPlayer.passiveFireDPS);
+        }
+
         private BigInteger applyFormula(int tier){
-            return BigInteger.Multiply(new BigInteger(5), BigInteger.Pow(2, tier-1));
+            return BigInteger.Multiply(tier, tier);
         }
 
 

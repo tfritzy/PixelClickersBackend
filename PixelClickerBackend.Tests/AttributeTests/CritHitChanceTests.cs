@@ -10,6 +10,59 @@ namespace PixelClickerBackend
     public class CritHitChanceTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new CritHitChanceAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new CritHitChanceAttribute(startTier+1, testPlayer);
+            Assert.Equal(0f,
+                        testPlayer.critHitChance);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.critHitChance);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new CritHitChanceAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new CritHitChanceAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.critHitChance);
+            attr.RemoveEffect();
+            Assert.Equal(0f,
+                        testPlayer.critHitChance);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new CritHitChanceAttribute(i, testPlayer);
+                Assert.Equal(0f,
+                        testPlayer.critHitChance);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new CritHitChanceAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.critHitChance);
+            
+            }
+        }
+        #endregion
+
+
+        #region ValueTests
         [Fact]
         public void TestLevel1()
         {
@@ -93,7 +146,9 @@ namespace PixelClickerBackend
             attr.ApplyEffect();
             Assert.Equal(100f, testPlayer.critHitChance);
         }
+        #endregion
 
+        #region TestActivate
         [Fact]
         public void TestActive()
         {
@@ -131,11 +186,6 @@ namespace PixelClickerBackend
             attr.RemoveEffect();
             Assert.Equal(0f, testPlayer.critHitChance);
         }
-
-
-
-
-
+        #endregion
     }
-
 }

@@ -10,6 +10,58 @@ namespace PixelClickerBackend
     public class PassiveNatureDPSTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new NatureDamageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new NatureDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveNatureDPS);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveNatureDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new NatureDamageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new NatureDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveNatureDPS);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveNatureDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new NatureDamageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveNatureDPS);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new NatureDamageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveNatureDPS);
+            
+            }
+        }
+        #endregion
+
+
         [Fact]
         public void TestLevel1()
         {
@@ -132,8 +184,20 @@ namespace PixelClickerBackend
             Assert.Equal(new BigInteger(0), testPlayer.passiveNatureDPS);
         }
 
+        [Fact]
+        public void TestLevelMaxInt()
+        {
+            Player testPlayer = new Player();
+            NatureDamageAttribute attr =
+                new NatureDamageAttribute(int.MaxValue, testPlayer);
+            Assert.Equal(int.MaxValue, attr.tier);
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), attr.GetEffectQuantity());
+            attr.ApplyEffect();
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), testPlayer.passiveNatureDPS);
+        }
+
         private BigInteger applyFormula(int tier){
-            return BigInteger.Multiply(new BigInteger(5), BigInteger.Pow(2, tier-1));
+            return BigInteger.Multiply(tier, tier);
         }
 
 

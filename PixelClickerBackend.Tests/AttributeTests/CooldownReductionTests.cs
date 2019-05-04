@@ -11,6 +11,78 @@ namespace PixelClickerBackend
     {
 
         [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new CooldownReductionAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new CooldownReductionAttribute(startTier+1, testPlayer);
+            Assert.Equal(0f,
+                        testPlayer.cooldownReduction);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.cooldownReduction);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new CooldownReductionAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new CooldownReductionAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.cooldownReduction);
+            attr.RemoveEffect();
+            Assert.Equal(0f,
+                        testPlayer.cooldownReduction);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new CooldownReductionAttribute(i, testPlayer);
+                Assert.Equal(0f,
+                        testPlayer.cooldownReduction);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new CooldownReductionAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.cooldownReduction);
+            
+            }
+        }
+
+        [Fact]
+        public void TestMultiLevelUp(){
+
+            Random random = new Random();
+            Player testPlayer = new Player();
+            float oldCDR = testPlayer.cooldownReduction;
+            int startTier = random.Next(1, 140);
+            Attribute attr = new CooldownReductionAttribute(startTier, testPlayer);
+            int numUpgrades = random.Next(0, 100);
+            for (int i = 0; i < numUpgrades; i++){
+                attr.LevelUp();
+            }
+            attr.ApplyEffect();
+            Attribute testAttr = new CooldownReductionAttribute(
+                                                        startTier + numUpgrades, 
+                                                        testPlayer);
+            Assert.Equal(startTier + numUpgrades, attr.tier);
+            Assert.Equal(testAttr.GetEffectQuantity(), 
+                        testPlayer.cooldownReduction - oldCDR);
+
+
+        }
+
+        [Fact]
         public void TestLevel1()
         {
             Player testPlayer = new Player();
@@ -93,6 +165,7 @@ namespace PixelClickerBackend
             attr.ApplyEffect();
             Assert.Equal(100f, testPlayer.cooldownReduction);
         }
+
 
         [Fact]
         public void TestActive()

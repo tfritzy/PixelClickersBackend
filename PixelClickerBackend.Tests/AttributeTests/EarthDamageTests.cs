@@ -10,6 +10,58 @@ namespace PixelClickerBackend
     public class PassiveEarthDPSTests
     {
 
+                #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new EarthDamageAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new EarthDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveEarthDPS);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveEarthDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new EarthDamageAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new EarthDamageAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveEarthDPS);
+            attr.RemoveEffect();
+            Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveEarthDPS);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new EarthDamageAttribute(i, testPlayer);
+                Assert.Equal(new BigInteger(0),
+                        testPlayer.passiveEarthDPS);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new EarthDamageAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.passiveEarthDPS);
+            
+            }
+        }
+        #endregion
+
+
         [Fact]
         public void TestLevel1()
         {
@@ -132,8 +184,20 @@ namespace PixelClickerBackend
             Assert.Equal(new BigInteger(0), testPlayer.passiveEarthDPS);
         }
 
+        [Fact]
+        public void TestLevelMaxInt()
+        {
+            Player testPlayer = new Player();
+            EarthDamageAttribute attr =
+                new EarthDamageAttribute(int.MaxValue, testPlayer);
+            Assert.Equal(int.MaxValue, attr.tier);
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), attr.GetEffectQuantity());
+            attr.ApplyEffect();
+            Assert.Equal(BigInteger.Parse("4611686014132420609"), testPlayer.passiveEarthDPS);
+        }
+
         private BigInteger applyFormula(int tier){
-            return BigInteger.Multiply(new BigInteger(5), BigInteger.Pow(2, tier-1));
+            return BigInteger.Multiply(tier, tier);
         }
 
 

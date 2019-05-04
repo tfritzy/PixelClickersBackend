@@ -10,6 +10,58 @@ namespace PixelClickerBackend
     public class enemyHealthPercentageReductionTests
     {
 
+        #region LevelUpTests
+        [Fact]
+        public void TestLevelUpNotEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new EnemyLifeReductionAttribute(startTier, testPlayer);
+            
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new EnemyLifeReductionAttribute(startTier+1, testPlayer);
+            Assert.Equal(0f,
+                        testPlayer.enemyHealthPercentageReduction);
+            attr.ApplyEffect();
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.enemyHealthPercentageReduction);
+        }
+
+        [Fact]
+        public void TestLevelUpEquipt(){
+            int startTier = 4;
+            Player testPlayer = new Player();
+            Attribute attr = new EnemyLifeReductionAttribute(startTier, testPlayer);
+            attr.ApplyEffect();
+            attr.LevelUp();
+            Assert.Equal(startTier + 1, attr.tier);
+            Attribute testAttr = new EnemyLifeReductionAttribute(startTier+1, testPlayer);
+            Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.enemyHealthPercentageReduction);
+            attr.RemoveEffect();
+            Assert.Equal(0f,
+                        testPlayer.enemyHealthPercentageReduction);
+        }
+
+        [Fact]
+        public void TestLevelUpAcrossManyLevels(){
+            for (int i = 1; i < 1000; i+=i){
+                Player testPlayer = new Player();
+                Attribute attr = new EnemyLifeReductionAttribute(i, testPlayer);
+                Assert.Equal(0f,
+                        testPlayer.enemyHealthPercentageReduction);
+                attr.ApplyEffect();
+                attr.LevelUp();
+                Assert.Equal(i + 1, attr.tier);
+                Attribute testAttr = new EnemyLifeReductionAttribute(i+1, testPlayer);
+                Assert.Equal(testAttr.GetEffectQuantity(),
+                        testPlayer.enemyHealthPercentageReduction);
+            
+            }
+        }
+        #endregion
+
+
         [Fact]
         public void TestLevel1()
         {

@@ -1,3 +1,4 @@
+using System.Numerics;
 namespace PixelClickerBackend
 {
     public abstract class Attribute
@@ -33,6 +34,22 @@ namespace PixelClickerBackend
             Remove();
         }
 
+        public void LevelUp()
+        {
+
+            if (isActive)
+            {
+                RemoveEffect();
+                this.tier += 1;
+                ApplyEffect();
+            }
+            else
+            {
+                this.tier += 1;
+            }
+
+
+        }
 
         public abstract object GetEffectQuantity();
         protected abstract void Apply();

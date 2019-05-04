@@ -23,7 +23,8 @@ namespace PixelClickerBackend
 
         public override object GetEffectQuantity()
         {
-            return BigInteger.Multiply(BigInteger.Pow(2, this.tier - 1), new BigInteger(5));
+            return BigInteger.Multiply(new BigInteger((long)this.tier),
+                                       new BigInteger((long)this.tier));
         }
 
     }

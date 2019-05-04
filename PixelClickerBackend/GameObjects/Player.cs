@@ -10,7 +10,7 @@ namespace PixelClickerBackend
         public string email;
         public string hashedAndSaltedPassword;
         public string numChests;
-        public int gold;
+        public BigInteger gold;
         public Gem[] gems;
         public BigInteger clickDamage;
         public BigInteger passiveWaterDPS;
@@ -23,7 +23,7 @@ namespace PixelClickerBackend
         public BigInteger teamDamageBonusPercent;
         public float critHitChance;
         public float critHitDamage;
-        public float damageIncreasePercentage;
+        public BigInteger damageIncreasePercentage;
         public BigInteger percentExtraXPPerKill;
         public float cooldownReduction;
 
