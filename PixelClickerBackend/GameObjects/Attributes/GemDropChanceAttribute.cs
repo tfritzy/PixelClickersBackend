@@ -10,7 +10,6 @@ namespace PixelClickerBackend
 
         }
 
-
         protected override void Apply()
         {
             player.gemDropChance += (float)GetEffectQuantity();
