@@ -7,7 +7,8 @@ namespace PixelClickerBackend.Tests
 {
     public class GemTests
     {
-        #region Sample_TestCode
+
+        #region Testing Emerald Basics
         [Fact]
         public void TestEmeraldBasics()
         {
@@ -15,7 +16,7 @@ namespace PixelClickerBackend.Tests
             Assert.Equal(GemType.Emerald, emerald.type);
             Assert.Equal(5, emerald.tier);
         }
-        #endregion
+        
 
         [Fact]
         public void TestEmeraldElementType()
@@ -45,7 +46,10 @@ namespace PixelClickerBackend.Tests
             }
             return false;
         }
+        #endregion
 
+
+        #region Test Emerald Level ups. 
         [Fact]
         public void TestEmeraldAttributesAtLevels()
         {
@@ -71,5 +75,25 @@ namespace PixelClickerBackend.Tests
                 Assert.Equal(testPlayer.enemyHealthPercentageReduction, (float)elr.GetEffectQuantity());
             }
         }
+
+        [Fact]
+        public void TestGivePlayerEmeralds(){
+            Player testPlayer = new Player();
+            for (int i = 1; i < 10; i++){
+                int tier = i;
+                Assert.Equal(0, testPlayer.GetGemCount(tier, GemType.Emerald));
+            }
+            Random random = new Random();
+            int randTier = random.Next(0, 100);
+            int quantity = random.Next(0, 100);
+            testPlayer.AddGems(randTier, quantity, GemType.Emerald);
+            Assert.Equal(quantity, testPlayer.GetGemCount(randTier, GemType.Emerald));
+            
+        }
+        
+
+        
+
+        #endregion
     }
 }
