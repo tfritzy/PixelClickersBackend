@@ -2,10 +2,15 @@
 namespace PixelClickerBackend
 {
 
-    class Droplet : Animental
+    public class Dropplet : Animental
     {
+        public Dropplet(int level, int powerLevel, Player player) : base(level, powerLevel, player)
+        {
 
+        }
     }
+
+
 
 
 }

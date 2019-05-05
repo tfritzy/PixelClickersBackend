@@ -12,7 +12,7 @@ namespace PixelClickerBackend {
             foreach(GemType gemType in Enum.GetValues(typeof(GemType))) {
                 Player testPlayer = new Player();
                 Random random = new Random();
-                int randomTier = random.Next(0, 100);
+                int randomTier = random.Next(1, 100);
                 Gem emerald = new Emerald(randomTier, testPlayer);
                 testPlayer.AddGems(randomTier, 3, gemType);
                 Assert.Equal(0, testPlayer.GetGemCount(randomTier+1, gemType));
@@ -29,7 +29,7 @@ namespace PixelClickerBackend {
             foreach(GemType gemType in Enum.GetValues(typeof(GemType))) {
                 Player testPlayer = new Player();
                 Random random = new Random();
-                int randomTier = random.Next(0, 100);
+                int randomTier = random.Next(1, 100);
                 Gem emerald = new Emerald(randomTier, testPlayer);
                 testPlayer.AddGems(randomTier, 11, gemType);
                 Assert.Equal(0, testPlayer.GetGemCount(randomTier+1, gemType));

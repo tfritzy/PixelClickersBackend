@@ -3,11 +3,10 @@
     "",
     "\\PixelClickerBackend",
     "\\PixelClickerBackend.Tests",
-    "\\PixelClickerBackend.Tests\\GemTests",
+    "\\PixelClickerBackend.Tests\\AnimentalTests",
     "\\PixelClickerBackend\\GameObjects",
-    "\\PixelClickerBackend\\GameObjects\\Attributes",
-    "\\PixelClickerBackend\\GameObjects\\Gems"
+    "\\PixelClickerBackend\\GameObjects\\Animentals",
+    "\\PixelClickerBackend\\obj"
   ],
-  "SelectedNode": "\\PixelClickerBackend\\GameObjects\\Gems\\Emerald.cs",
   "PreviewInSolutionExplorer": false
 }
