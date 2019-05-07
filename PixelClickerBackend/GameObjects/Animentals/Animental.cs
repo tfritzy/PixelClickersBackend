@@ -73,10 +73,8 @@ namespace PixelClickerBackend
         public bool PowerUp(){
             if (player.gold >= GetPowerUpPrice()){
                 if (powerLevel % 5 == 0){
-                    requiredGemTier = powerLevel / 5;
-                    requiredGemQuantity = powerLevel % 5;
-                    if (player.GetGemCount(requierdGemTier, GemType.Sapphire)){
-
+                    if (player.GetGemCount(1, GemType.Sapphire) == 0){
+                        return false;
                     }
                 }
                 player.gold -= GetPowerUpPrice();

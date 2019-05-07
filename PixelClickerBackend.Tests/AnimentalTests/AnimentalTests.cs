@@ -101,7 +101,7 @@ namespace PixelClickerBackend.Tests
         #endregion
 
         #region Testing Powering up Animentals
-        [Fact]
+
         public void TestEarlyPowerUps(){
             Player player = new Player();
             Animental dropplet = new Dropplet(1, 1, player);
@@ -109,37 +109,48 @@ namespace PixelClickerBackend.Tests
             Assert.False(dropplet.PowerUp());
 
             player.gold = 300;
-            // Upgrade 1 costs 50
+            // Upgrade 1 costs 10
             Assert.True(dropplet.PowerUp());
             Assert.Equal(2, dropplet.powerLevel);
-            Assert.Equal(250, player.gold);
+            Assert.Equal(290, player.gold);
 
-            // Upgrade 2 costs 100
+            // Upgrade 2 costs 11
             Assert.True(dropplet.PowerUp());
             Assert.Equal(3, dropplet.powerLevel);
-            Assert.Equal(150, player.gold);
+            Assert.Equal(279, player.gold);
 
-            // Upgrade 3 costs 150
-            player.gold = 50;
+            // Upgrade 3 costs 12
+            player.gold = 10;
             Assert.False(dropplet.PowerUp());
-            Assert.Equal(50, player.gold);
+            Assert.Equal(10, player.gold);
 
-            // Upgrade 3 costs 150
-            player.gold = 150;
+            // Upgrade 3 costs 12
+            player.gold = 13;
             Assert.True(dropplet.PowerUp());
             Assert.Equal(0, player.gold);
 
+            // Upgrade 4 costs 13
             player.gold = 200;
             Assert.True(dropplet.PowerUp());
             Assert.Equal(0, player.gold);
 
-            player.gold = 250;
+            // Upgrade 5 costs 14 and 1 tier 1 sapphire
+            player.gold = 14;
             Assert.False(dropplet.PowerUp());
-            Assert.Equal(250, player.gold);
+            Assert.Equal(14, player.gold);
 
         }
 
-        [Fact]
+  
+        public void TestLargeCostUpgrades(){
+            Animental dropplet = new Dropplet(1, 1, new Player());
+            for (int i = 1; i < 10000000000; i+=i){
+                Assert.True(dropplet.GetPowerUpPrice() > 0);
+                dropplet.powerLevel += 1;
+            }
+        }
+
+
         public void TestLatePowerUps(){
             Player player = new Player();
             Animental dropplet = new Dropplet(1, 1342, player);
