@@ -18,11 +18,10 @@ namespace PixelClickerBackend
         {
             this.significand = significand;
             this.magnitude = magnitude;
-            this.significand = Round(significand);
             ShiftSignificandIntoMagnitude();
-            
+            this.significand = Round(this.significand);
         }
-
+        
 
         public void Multiply(ExpNumber value){
             this.significand = this.significand * value.significand;
@@ -78,15 +77,20 @@ namespace PixelClickerBackend
         }
 
         private void ShiftSignificandIntoMagnitude(){
-            while (this.significand >= 10f)
+            if (this.significand == 0){
+                this.magnitude = 0;
+                return;
+            }
+            while (Math.Abs(this.significand) >= 10f)
             {
                 this.significand /= 10.0;
                 this.magnitude += 1;
             }
-            while (this.significand <= -10f)
+
+            while (Math.Abs(this.significand) < 1f && Math.Abs(this.significand) >= 0)
             {
-                this.significand /= 10.0;
-                this.magnitude += 1;
+                this.significand *= 10.0;
+                this.magnitude -= 1;
             }
             
         

@@ -31,7 +31,7 @@ namespace PixelClickerBackend.Tests
         {
             ExpNumber number = new ExpNumber(.00000243, 0);
             Assert.Equal(2.43, number.significand);
-            Assert.Equal(-14, number.magnitude);
+            Assert.Equal(-6, number.magnitude);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace PixelClickerBackend.Tests
             ExpNumber num1 = new ExpNumber(0, 0);
             ExpNumber num2 = new ExpNumber(9.42, 2);
             num1.Multiply(num2);
-            Assert.Equal(new ExpNumber(-1.998, 3), num1);
+            Assert.Equal(new ExpNumber(0, 0), num1);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace PixelClickerBackend.Tests
             ExpNumber num1 = new ExpNumber(1.5432, 4);
             ExpNumber num2 = new ExpNumber(1, -18);
             num1.Multiply(num2);
-            Assert.Equal(new ExpNumber(1.5432, -1), num1);
+            Assert.Equal(new ExpNumber(1.5432, -14), num1);
         }
 
         #endregion

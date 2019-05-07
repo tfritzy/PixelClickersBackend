@@ -144,7 +144,7 @@ namespace PixelClickerBackend.Tests
   
         public void TestLargeCostUpgrades(){
             Animental dropplet = new Dropplet(1, 1, new Player());
-            for (int i = 1; i < 10000000000; i+=i){
+            for (int i = 1; i < 100000000; i+=i){
                 Assert.True(dropplet.GetPowerUpPrice() > 0);
                 dropplet.powerLevel += 1;
             }
