@@ -2,8 +2,6 @@ using System;
 
 namespace PixelClickerBackend
 {
-
-
     ///<summary>
     /// A class that can handle extremely large numbers, but only with 6 digits of precision.
     /// Numbers are represented with a significand and a magnitude. This works exactly like scientific notation.
@@ -21,7 +19,30 @@ namespace PixelClickerBackend
             ShiftSignificandIntoMagnitude();
             this.significand = Round(this.significand);
         }
-        
+
+        /// <summary>
+        ///  Raises this number to the power of the passed value
+        ///  Node that passing in values
+        /// </summary>
+        public void Pow(int exponent)
+        { 
+            ExpNumber valueCollector = new ExpNumber(1, 0);
+            ExpNumber powChunck = null;
+            // Break into chucks to let Math.Pow do the most work it can. 
+            // Chunks have to be < 308 to avoid overflow
+            while (exponent / 250 > 0){
+                if (powChunck == null){
+                    powChunck = this.Clone();
+                    powChunck.Pow(249);
+                }
+                valueCollector.Multiply(powChunck);
+                exponent -= 249;
+            }
+            this.significand = Math.Pow(this.significand, exponent);
+            this.magnitude = this.magnitude * exponent;
+            ShiftSignificandIntoMagnitude();
+            this.Multiply(valueCollector);
+        }
 
         public void Multiply(ExpNumber value){
             this.significand = this.significand * value.significand;
@@ -29,24 +50,57 @@ namespace PixelClickerBackend
             ShiftSignificandIntoMagnitude();
         }
 
+        /// <summary>
+        /// Divides the current ExpNumber by the passed in value. 
+        /// </summary>
+        public void Divide(ExpNumber divisor){
+            this.significand = this.significand / divisor.significand;
+            this.magnitude = this.magnitude - divisor.magnitude;
+            ShiftSignificandIntoMagnitude();
+        }
+
+        /// <summary>
+        /// Subtracts the passed in value from the current ExpNumber
+        /// </summary>
+        public void Subtract(ExpNumber value){
+            ExpNumber subtractValue = value.Clone();
+            if (subtractValue.magnitude > this.magnitude)
+            {
+                double tempSignificand = this.significand;
+                int tempMagnitude = this.magnitude;
+                this.magnitude = subtractValue.magnitude;
+                this.significand = subtractValue.significand;
+                subtractValue.significand = tempSignificand;
+                subtractValue.magnitude = tempMagnitude;
+            }
+            this.significand -= subtractValue.significand /
+                                (double)Math.Pow(10, this.magnitude - 
+                                                    subtractValue.magnitude);
+
+            ShiftSignificandIntoMagnitude();
+            this.significand = Round(significand);
+        }
+
+
+
         /// <Summary>
         /// Adds the value passed into the function to the current ExpNumber
         /// </Summary>
         public void Add(ExpNumber addition)
         {
-            ExpNumber additionClone = addition.Clone();
-            if (additionClone.magnitude > this.magnitude)
+            ExpNumber subtractValue = addition.Clone();
+            if (subtractValue.magnitude > this.magnitude)
             {
                 double tempSignificand = this.significand;
                 int tempMagnitude = this.magnitude;
-                this.magnitude = additionClone.magnitude;
-                this.significand = additionClone.significand;
-                additionClone.significand = tempSignificand;
-                additionClone.magnitude = tempMagnitude;
+                this.magnitude = subtractValue.magnitude;
+                this.significand = subtractValue.significand;
+                subtractValue.significand = tempSignificand;
+                subtractValue.magnitude = tempMagnitude;
             }
-            this.significand += additionClone.significand /
+            this.significand += subtractValue.significand /
                                 (double)Math.Pow(10, this.magnitude - 
-                                                    additionClone.magnitude);
+                                                    subtractValue.magnitude);
 
             ShiftSignificandIntoMagnitude();
             this.significand = Round(significand);
@@ -92,8 +146,6 @@ namespace PixelClickerBackend
                 this.significand *= 10.0;
                 this.magnitude -= 1;
             }
-            
-        
         }
 
         public ExpNumber Clone()

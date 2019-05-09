@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj": {}
+    "C:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj": {}
   },
   "projects": {
-    "c:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj": {
+    "C:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj",
+        "projectUniqueName": "C:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj",
         "projectName": "PixelClickerBackend.Tests",
-        "projectPath": "c:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj",
+        "projectPath": "C:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\PixelClickerBackend.Tests.csproj",
         "packagesPath": "C:\\Users\\tfrit\\.nuget\\packages\\",
-        "outputPath": "c:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\obj\\",
+        "outputPath": "C:\\development\\PixelClickerBackend\\PixelClickerBackend.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj": {
-                "projectPath": "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj"
+              "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj": {
+                "projectPath": "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj"
               }
             }
           }
@@ -72,14 +72,14 @@
         }
       }
     },
-    "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj": {
+    "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj",
+        "projectUniqueName": "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj",
         "projectName": "PixelClickerBackend",
-        "projectPath": "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj",
+        "projectPath": "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\PixelClickerBackend.csproj",
         "packagesPath": "C:\\Users\\tfrit\\.nuget\\packages\\",
-        "outputPath": "c:\\development\\PixelClickerBackend\\PixelClickerBackend\\obj\\",
+        "outputPath": "C:\\development\\PixelClickerBackend\\PixelClickerBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
