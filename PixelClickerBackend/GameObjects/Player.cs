@@ -12,7 +12,7 @@ namespace PixelClickerBackend
         public string email;
         public string hashedAndSaltedPassword;
         public string numChests;
-        public BigInteger gold;
+        public ExpNumber gold;
         public Gem[] gems;
         public BigInteger clickDamage;
         public BigInteger passiveWaterDPS;
@@ -38,6 +38,7 @@ namespace PixelClickerBackend
             rubies = new Dictionary<int, int>();
             sapphires = new Dictionary<int, int>();
             topaz = new Dictionary<int, int>();
+            this.gold = new ExpNumber(0, 0);
         }
 
         public int GetGemCount(int tier, GemType gemType){

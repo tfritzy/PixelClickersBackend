@@ -1,12 +1,12 @@
 using System;
-
+using System.Collections;
 namespace PixelClickerBackend
 {
     ///<summary>
     /// A class that can handle extremely large numbers, but only with 6 digits of precision.
     /// Numbers are represented with a significand and a magnitude. This works exactly like scientific notation.
     ///<summary>
-    public class ExpNumber
+    public class ExpNumber : IComparable
     {
         public double significand;
         public int magnitude;
@@ -25,13 +25,15 @@ namespace PixelClickerBackend
         ///  Node that passing in values
         /// </summary>
         public void Pow(int exponent)
-        { 
+        {
             ExpNumber valueCollector = new ExpNumber(1, 0);
             ExpNumber powChunck = null;
             // Break into chucks to let Math.Pow do the most work it can. 
             // Chunks have to be < 308 to avoid overflow
-            while (exponent / 250 > 0){
-                if (powChunck == null){
+            while (exponent / 250 > 0)
+            {
+                if (powChunck == null)
+                {
                     powChunck = this.Clone();
                     powChunck.Pow(249);
                 }
@@ -44,7 +46,8 @@ namespace PixelClickerBackend
             this.Multiply(valueCollector);
         }
 
-        public void Multiply(ExpNumber value){
+        public void Multiply(ExpNumber value)
+        {
             this.significand = this.significand * value.significand;
             this.magnitude = this.magnitude + value.magnitude;
             ShiftSignificandIntoMagnitude();
@@ -53,16 +56,23 @@ namespace PixelClickerBackend
         /// <summary>
         /// Divides the current ExpNumber by the passed in value. 
         /// </summary>
-        public void Divide(ExpNumber divisor){
+        public void Divide(ExpNumber divisor)
+        {
             this.significand = this.significand / divisor.significand;
             this.magnitude = this.magnitude - divisor.magnitude;
             ShiftSignificandIntoMagnitude();
         }
 
+        public void Subtract(double value){
+            ExpNumber subtractVal = new ExpNumber(value, 0);
+            this.Subtract(subtractVal);
+        }
+
         /// <summary>
         /// Subtracts the passed in value from the current ExpNumber
         /// </summary>
-        public void Subtract(ExpNumber value){
+        public void Subtract(ExpNumber value)
+        {
             ExpNumber subtractValue = value.Clone();
             if (subtractValue.magnitude > this.magnitude)
             {
@@ -72,9 +82,11 @@ namespace PixelClickerBackend
                 this.significand = subtractValue.significand;
                 subtractValue.significand = tempSignificand;
                 subtractValue.magnitude = tempMagnitude;
+                subtractValue.significand *= -1;
+                this.significand *= -1;
             }
             this.significand -= subtractValue.significand /
-                                (double)Math.Pow(10, this.magnitude - 
+                                (double)Math.Pow(10, this.magnitude -
                                                     subtractValue.magnitude);
 
             ShiftSignificandIntoMagnitude();
@@ -99,7 +111,7 @@ namespace PixelClickerBackend
                 subtractValue.magnitude = tempMagnitude;
             }
             this.significand += subtractValue.significand /
-                                (double)Math.Pow(10, this.magnitude - 
+                                (double)Math.Pow(10, this.magnitude -
                                                     subtractValue.magnitude);
 
             ShiftSignificandIntoMagnitude();
@@ -116,11 +128,9 @@ namespace PixelClickerBackend
             else
             {
                 ExpNumber other = (ExpNumber)obj;
-                double absOtherSignificand = Math.Abs(other.significand);
-                double absThisSignificand = Math.Abs(this.significand);
-                
-                return (absOtherSignificand <= absThisSignificand * 1.001) &&
-                       (absOtherSignificand >= absThisSignificand * .999) &&
+                if (other == null)
+                    return false;
+                return IsWithinPoint1Percentage(this.significand, other.significand) &&
                         (this.magnitude == other.magnitude);
             }
         }
@@ -130,8 +140,10 @@ namespace PixelClickerBackend
             return Math.Round(value, PRECISION_DIGITS);
         }
 
-        private void ShiftSignificandIntoMagnitude(){
-            if (this.significand == 0){
+        private void ShiftSignificandIntoMagnitude()
+        {
+            if (this.significand == 0)
+            {
                 this.magnitude = 0;
                 return;
             }
@@ -153,10 +165,50 @@ namespace PixelClickerBackend
             return new ExpNumber(this.significand, this.magnitude);
         }
 
-        public override string ToString(){
+        public override string ToString()
+        {
             return significand + "e^" + magnitude;
         }
 
+        public int CompareTo(Object obj)
+        {
+            if (obj == null) return 1;
 
+            ExpNumber otherNumber = obj as ExpNumber;
+            if (otherNumber != null)
+            {
+                if (this.magnitude != otherNumber.magnitude)
+                {
+                    return this.magnitude - otherNumber.magnitude;
+                }
+                else
+                {
+                    if (IsWithinPoint1Percentage(this.significand, otherNumber.significand))
+                    {
+                        return 0;
+                    }
+                    else if (this.significand > otherNumber.significand)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+            else
+                throw new ArgumentException("Object is not an ExpNumber");
+        }
+
+        /// Finds if the second paramter is within .1% of the first.
+        public static bool IsWithinPoint1Percentage(double num1, double num2)
+        {
+            if (num1 == 0 && num2 == 0)
+                return true;
+            if (Math.Abs(num1 - num2) >= Math.Abs(num1 * .001))
+                return false;
+            return true;
+        }
     }
 }

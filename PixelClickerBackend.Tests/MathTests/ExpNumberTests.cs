@@ -7,6 +7,13 @@ using System.Collections.Generic;
 namespace PixelClickerBackend.Tests
 {
 
+
+    /// <summary>
+    /// A class that supports values up to 9.99 * 10 ^ maxInt with abstract specified number of precision digits.
+    /// the default number of precision digits is 5.
+    /// Note that this class does not work well for very small numbers. It could, but I don't need small numbers for my application.
+    /// </summary>
+
     public class ExpNumberTests
     {
 
@@ -75,17 +82,35 @@ namespace PixelClickerBackend.Tests
             }
         }
 
-        private ExpNumber VerifyPow(double baseValue, int exponent){
+        private ExpNumber VerifyPow(double baseValue, int exponent)
+        {
             ExpNumber collector = new ExpNumber(1, 0);
             ExpNumber multiplier = new ExpNumber(baseValue, 0);
-            for (int i = 0; i < exponent; i++){
+            for (int i = 0; i < exponent; i++)
+            {
                 collector.Multiply(multiplier);
             }
             return collector;
         }
+        #endregion
 
+        #region Test CompareTo Method
 
-
+        public void TestManyCompares()
+        {
+            Random random = new Random();
+            for (int i = 0; i < 1000; i++)
+            {
+                double num1 = random.Next(0, 10000);
+                double num2 = random.Next(0, 10000);
+                ExpNumber num1Exp = new ExpNumber(num1, 0);
+                ExpNumber num2Exp = new ExpNumber(num2, 0);
+                num1Exp.Multiply(num2Exp);
+                ExpNumber expected = new ExpNumber(num1 * num2, 0);
+                ExpNumber actual = num1Exp;
+                Assert.Equal(expected.CompareTo(actual), 0);
+            }
+        }
         #endregion
 
         #region Multiplying ExpNumbers together
@@ -197,7 +222,28 @@ namespace PixelClickerBackend.Tests
             Assert.Equal(new ExpNumber(1, 2000000000), num1);
         }
 
+        [Fact]
+        public void TestWithinSmallPercentage()
+        {
+            Assert.True(ExpNumber.IsWithinPoint1Percentage(1.0001, 1));
+            Assert.False(ExpNumber.IsWithinPoint1Percentage(1.1, 1));
+            Assert.False(ExpNumber.IsWithinPoint1Percentage(1, 1.1));
+            Assert.False(ExpNumber.IsWithinPoint1Percentage(9.9, 1));
+            Assert.True(ExpNumber.IsWithinPoint1Percentage(100, 100.1));
+            Assert.True(ExpNumber.IsWithinPoint1Percentage(100.1, 100));
+            Assert.True(ExpNumber.IsWithinPoint1Percentage(-100.1, -100));
+            Assert.True(ExpNumber.IsWithinPoint1Percentage(-100, -100.1));
+            for (int i = 0; i < 100; i++){
+                Random random = new Random();
+                double startNum = random.Next(-100000, 100000);
+                Assert.True(ExpNumber.IsWithinPoint1Percentage(startNum, startNum * 1.0009));
+                Assert.False(ExpNumber.IsWithinPoint1Percentage(startNum, startNum * 1.0011));
+            }
+        }
+
         #endregion
+
+
 
         #region Testing Division of ExpNumbers
 
@@ -380,11 +426,12 @@ namespace PixelClickerBackend.Tests
                 double num1 = random.Next(-100000, 100000);
                 double num2 = random.Next(-100000, 100000);
                 ExpNumber num1Exp = new ExpNumber(num1, 0);
+                ExpNumber oldNum1 = num1Exp.Clone();
                 ExpNumber num2Exp = new ExpNumber(num2, 0);
                 num1Exp.Subtract(num2Exp);
                 ExpNumber actual = num1Exp;
                 ExpNumber expected = new ExpNumber(num1 - num2, 0);
-                Assert.Equal(expected, actual);
+                Assert.True(expected.Equals(actual), oldNum1 + " - " + num2Exp + " = " + expected + ", Actual: " + actual);
             }
         }
 
@@ -398,20 +445,27 @@ namespace PixelClickerBackend.Tests
                                                         random.Next(0, 10));
                 ExpNumber largeNumber = new ExpNumber(random.Next(1, 99) / 10.0,
                                                         random.Next(10000, 1000000000));
-                ExpNumber temp = smallNumber.Clone();
-                String expectedMessage = String.Format("Expected: {0} + {1} = {2}\n",
+                String expectedMessage = String.Format("Expected: {0} - {1} = {2}\n",
                                                     smallNumber.ToString(),
                                                     largeNumber.ToString(),
                                                     largeNumber.ToString());
 
-                smallNumber.Subtract(largeNumber);
-                String actualMessage = String.Format(" Actual: {0} + {1} = {2}",
-                                                    temp.ToString(),
+                ExpNumber actualSmallMinusLarge = smallNumber.Clone();
+                actualSmallMinusLarge.Subtract(largeNumber);
+                String actualMessage = String.Format(" Actual: {0} - {1} = -{2}",
+                                                    smallNumber.ToString(),
                                                     largeNumber.ToString(),
                                                     smallNumber.ToString());
-                Assert.True(smallNumber.Equals(largeNumber), expectedMessage + actualMessage);
-                largeNumber.Add(temp);
-                Assert.True(smallNumber.Equals(largeNumber), expectedMessage + actualMessage);
+                ExpNumber expectedSmallMinusLarge = largeNumber.Clone();
+                expectedSmallMinusLarge.significand *= -1;
+
+                Assert.True(actualSmallMinusLarge.Equals(expectedSmallMinusLarge), expectedMessage + actualMessage);
+
+                ExpNumber expectedLargeMinusSmall = largeNumber.Clone();
+                ExpNumber actualLargeMinusSmall = largeNumber.Clone();
+                actualLargeMinusSmall.Subtract(smallNumber);
+
+                Assert.True(expectedLargeMinusSmall.Equals(actualLargeMinusSmall), expectedMessage + actualMessage);
             }
         }
 

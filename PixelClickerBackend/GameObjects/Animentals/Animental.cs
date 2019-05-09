@@ -71,21 +71,25 @@ namespace PixelClickerBackend
         }
 
         public bool PowerUp(){
-            if (player.gold >= GetPowerUpPrice()){
+            if (player.gold.CompareTo(GetPowerUpPrice()) >= 0){
                 if (powerLevel % 5 == 0){
                     if (player.GetGemCount(1, GemType.Sapphire) == 0){
                         return false;
                     }
                 }
-                player.gold -= GetPowerUpPrice();
+                player.gold.Subtract(GetPowerUpPrice());
                 this.powerLevel += 1; 
                 return true;
             }
             return false;
         }
 
-        public BigInteger GetPowerUpPrice(){
-            return BigInteger.Multiply(powerLevel, 50);
+        public ExpNumber GetPowerUpPrice(){
+            ExpNumber baseNumber = new ExpNumber(10, 0);
+            ExpNumber exponent = new ExpNumber(1.1, 0);
+            exponent.Pow(this.powerLevel-1);
+            baseNumber.Multiply(exponent);
+            return baseNumber;
         }
     }
 
