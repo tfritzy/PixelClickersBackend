@@ -84,6 +84,7 @@ namespace PixelClickerBackend
             return true;
 
         }
+
         private int GetPowerUpGemTier(){
             if ((powerLevel+1) % POWER_SPIKE_INTERVAL != 0)
                 return 0;

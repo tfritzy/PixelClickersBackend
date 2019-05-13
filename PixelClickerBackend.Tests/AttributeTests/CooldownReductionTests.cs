@@ -72,11 +72,11 @@ namespace PixelClickerBackend
                 attr.LevelUp();
             }
             attr.ApplyEffect();
-            Attribute testAttr = new CooldownReductionAttribute(
+            Attribute expectedCDR = new CooldownReductionAttribute(
                                                         startTier + numUpgrades, 
                                                         testPlayer);
             Assert.Equal(startTier + numUpgrades, attr.tier);
-            Assert.Equal(testAttr.GetEffectQuantity(), 
+            Assert.Equal(expectedCDR.GetEffectQuantity(), 
                         testPlayer.cooldownReduction - oldCDR);
 
 
