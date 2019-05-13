@@ -6,14 +6,6 @@ using System.Collections.Generic;
 
 namespace PixelClickerBackend.Tests
 {
-
-
-    /// <summary>
-    /// A class that supports values up to 9.99 * 10 ^ maxInt with abstract specified number of precision digits.
-    /// the default number of precision digits is 5.
-    /// Note that this class does not work well for very small numbers. It could, but I don't need small numbers for my application.
-    /// </summary>
-
     public class ExpNumberTests
     {
 

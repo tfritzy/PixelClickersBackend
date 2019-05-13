@@ -63,7 +63,8 @@ namespace PixelClickerBackend
             ShiftSignificandIntoMagnitude();
         }
 
-        public void Subtract(double value){
+        public void Subtract(double value)
+        {
             ExpNumber subtractVal = new ExpNumber(value, 0);
             this.Subtract(subtractVal);
         }
@@ -209,6 +210,11 @@ namespace PixelClickerBackend
             if (Math.Abs(num1 - num2) >= Math.Abs(num1 * .001))
                 return false;
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.significand + "e" + this.magnitude).GetHashCode();
         }
     }
 }

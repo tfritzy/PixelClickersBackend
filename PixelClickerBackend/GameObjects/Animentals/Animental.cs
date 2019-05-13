@@ -13,6 +13,8 @@ namespace PixelClickerBackend
         public AnimentalTier tier;
         private Player player;
 
+        private readonly int POWER_SPIKE_INTERVAL = 5;
+
         public Animental(int level, int powerLevel, Player player)
         {
             this.level = level;
@@ -71,17 +73,31 @@ namespace PixelClickerBackend
         }
 
         public bool PowerUp(){
-            if (player.gold.CompareTo(GetPowerUpPrice()) >= 0){
-                if (powerLevel % 5 == 0){
-                    if (player.GetGemCount(1, GemType.Sapphire) == 0){
-                        return false;
-                    }
-                }
-                player.gold.Subtract(GetPowerUpPrice());
-                this.powerLevel += 1; 
-                return true;
+            if (player.gold.CompareTo(GetPowerUpPrice()) < 0)
+                return false;   
+            if (player.GetGemCount(GetPowerUpGemTier(), GemType.Sapphire) < GetPowerUpGemQuantity()){
+                return false;
             }
-            return false;
+            this.player.AddGems(GetPowerUpGemTier(), -GetPowerUpGemQuantity(), GemType.Sapphire);
+            player.gold.Subtract(GetPowerUpPrice());
+            this.powerLevel += 1; 
+            return true;
+
+        }
+        private int GetPowerUpGemTier(){
+            if ((powerLevel+1) % POWER_SPIKE_INTERVAL != 0)
+                return 0;
+            int tier = (powerLevel + 1) / POWER_SPIKE_INTERVAL - 1;
+            tier = tier / 3 + 1;
+            return tier;
+        }
+
+        private int GetPowerUpGemQuantity(){
+            if ((powerLevel+1) % POWER_SPIKE_INTERVAL != 0)
+                return 0;
+            int quantity = (powerLevel + 1) / POWER_SPIKE_INTERVAL - 1;
+            quantity = quantity % 3 + 1;
+            return quantity;
         }
 
         public ExpNumber GetPowerUpPrice(){
