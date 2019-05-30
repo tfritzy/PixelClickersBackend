@@ -15,14 +15,14 @@ namespace PixelClickerBackend
         public void TestLevelUpNotEquipt(){
             int startTier = 4;
             Player testPlayer = new Player();
-            Attribute attr = new GemDropChanceAttribute(startTier, testPlayer);
+            Attribute attr = new GemDropChanceAttribute(startTier);
             
             attr.LevelUp();
             Assert.Equal(startTier + 1, attr.tier);
-            Attribute testAttr = new GemDropChanceAttribute(startTier+1, testPlayer);
+            Attribute testAttr = new GemDropChanceAttribute(startTier+1);
             Assert.Equal(0f,
                         testPlayer.gemDropChance);
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.gemDropChance);
         }
@@ -31,14 +31,14 @@ namespace PixelClickerBackend
         public void TestLevelUpEquipt(){
             int startTier = 4;
             Player testPlayer = new Player();
-            Attribute attr = new GemDropChanceAttribute(startTier, testPlayer);
-            attr.ApplyEffect();
+            Attribute attr = new GemDropChanceAttribute(startTier);
+            attr.ApplyEffect(testPlayer);
             attr.LevelUp();
             Assert.Equal(startTier + 1, attr.tier);
-            Attribute testAttr = new GemDropChanceAttribute(startTier+1, testPlayer);
+            Attribute testAttr = new GemDropChanceAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.gemDropChance);
-            attr.RemoveEffect();
+            attr.RemoveEffect(testPlayer);
             Assert.Equal(0f,
                         testPlayer.gemDropChance);
         }
@@ -47,13 +47,13 @@ namespace PixelClickerBackend
         public void TestLevelUpAcrossManyLevels(){
             for (int i = 1; i < 1000; i+=i){
                 Player testPlayer = new Player();
-                Attribute attr = new GemDropChanceAttribute(i, testPlayer);
+                Attribute attr = new GemDropChanceAttribute(i);
                 Assert.Equal(0f,
                         testPlayer.gemDropChance);
-                attr.ApplyEffect();
+                attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
-                Attribute testAttr = new GemDropChanceAttribute(i+1, testPlayer);
+                Attribute testAttr = new GemDropChanceAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.gemDropChance);
             
@@ -67,10 +67,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(1, testPlayer);
+                new GemDropChanceAttribute(1);
             Assert.Equal(1, attr.tier);
             Assert.Equal(applyFormula(1), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(1), testPlayer.gemDropChance);
         }
 
@@ -79,10 +79,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(2, testPlayer);
+                new GemDropChanceAttribute(2);
             Assert.Equal(2, attr.tier);
             Assert.Equal(applyFormula(2), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(2), testPlayer.gemDropChance);
         }
 
@@ -91,10 +91,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(3, testPlayer);
+                new GemDropChanceAttribute(3);
             Assert.Equal(3, attr.tier);
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(3), testPlayer.gemDropChance);
         }
 
@@ -103,10 +103,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(4, testPlayer);
+                new GemDropChanceAttribute(4);
             Assert.Equal(4, attr.tier);
             Assert.Equal(applyFormula(4), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(4), testPlayer.gemDropChance);
         }
 
@@ -115,10 +115,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(5, testPlayer);
+                new GemDropChanceAttribute(5);
             Assert.Equal(5, attr.tier);
             Assert.Equal(applyFormula(5), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(5), testPlayer.gemDropChance);
         }
 
@@ -127,10 +127,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(10, testPlayer);
+                new GemDropChanceAttribute(10);
             Assert.Equal(10, attr.tier);
             Assert.Equal(applyFormula(10), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(10), testPlayer.gemDropChance);
         }
 
@@ -139,10 +139,10 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-                new GemDropChanceAttribute(100, testPlayer);
+                new GemDropChanceAttribute(100);
             Assert.Equal(100, attr.tier);
             Assert.Equal(applyFormula(100), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(100), testPlayer.gemDropChance);
         }
 
@@ -151,14 +151,14 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-            new GemDropChanceAttribute(3, testPlayer);
+            new GemDropChanceAttribute(3);
             Assert.Equal(3, attr.tier);
-            attr.ApplyEffect();
-            Assert.True(attr.isActive);
-            attr.RemoveEffect();
-            Assert.False(attr.isActive);
+            attr.ApplyEffect(testPlayer);
+            Assert.True(attr.IsActive(testPlayer));
+            attr.RemoveEffect(testPlayer);
+            Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(3), testPlayer.gemDropChance);
         }
 
@@ -167,20 +167,20 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             GemDropChanceAttribute attr =
-            new GemDropChanceAttribute(10, testPlayer);
+            new GemDropChanceAttribute(10);
             Random r = new Random();
             for (int j = 0; j < 1000; j++)
             {
                 if (r.Next(0, 2) == 1)
                 {
-                    attr.ApplyEffect();
+                    attr.ApplyEffect(testPlayer);
                 }
                 else
-                    attr.RemoveEffect();
+                    attr.RemoveEffect(testPlayer);
             }
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(applyFormula(10), testPlayer.gemDropChance);
-            attr.RemoveEffect();
+            attr.RemoveEffect(testPlayer);
             Assert.Equal(0f, testPlayer.gemDropChance);
         }
 

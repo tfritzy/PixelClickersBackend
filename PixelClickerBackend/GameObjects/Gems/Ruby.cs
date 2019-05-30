@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace PixelClickerBackend
 {
     public class Ruby : Gem
@@ -8,13 +11,11 @@ namespace PixelClickerBackend
             this.element = Elements.Fire;
         }
 
-        protected override Attribute[] SetupAttributes()
+        protected override void SetupAttributes()
         {
-            Attribute[] attributes = new Attribute[3];
-            attributes[0] = new FireDamageAttribute(this.tier, this.player);
-            attributes[1] = new GoldFindPercentageAttribute(this.tier, this.player);
-            attributes[2] = new ExtraTeamDamageAttribute(this.tier, this.player);
-            return attributes;
+            this.attributes.Add(typeof(FireDamageAttribute), new FireDamageAttribute(this.tier));
+            this.attributes.Add(typeof(GoldFindPercentageAttribute), new GoldFindPercentageAttribute(this.tier));
+            this.attributes.Add(typeof(ExtraTeamDamageAttribute), new ExtraTeamDamageAttribute(this.tier));
         }
 
     }

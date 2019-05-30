@@ -5,17 +5,17 @@ namespace PixelClickerBackend
     public class GemDropChanceAttribute : Attribute
     {
 
-        public GemDropChanceAttribute(int tier, Player player) : base(tier, player)
+        public GemDropChanceAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             player.gemDropChance += (float)GetEffectQuantity();
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             player.gemDropChance -= (float)GetEffectQuantity();
         }

@@ -5,19 +5,19 @@ namespace PixelClickerBackend
 {
     public class PercentExtraXPPerKillAttribute : Attribute
     {
-        public PercentExtraXPPerKillAttribute(int tier, Player player) : base(tier, player)
+        public PercentExtraXPPerKillAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             player.percentExtraXPPerKill = 
             BigInteger.Add(player.percentExtraXPPerKill, 
                             (BigInteger)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             player.percentExtraXPPerKill = 
             BigInteger.Subtract(player.percentExtraXPPerKill, 

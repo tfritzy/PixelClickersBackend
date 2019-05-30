@@ -5,18 +5,18 @@ namespace PixelClickerBackend
     public class DamageIncreasePercentageAttribute : Attribute
     {
 
-        public DamageIncreasePercentageAttribute(int tier, Player player) : base(tier, player)
+        public DamageIncreasePercentageAttribute(int tier) : base(tier)
         {
 
         }
 
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             player.damageIncreasePercentage += (BigInteger)GetEffectQuantity();
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             player.damageIncreasePercentage -= (BigInteger)GetEffectQuantity();
         }

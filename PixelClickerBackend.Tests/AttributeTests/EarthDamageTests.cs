@@ -15,14 +15,14 @@ namespace PixelClickerBackend
         public void TestLevelUpNotEquipt(){
             int startTier = 4;
             Player testPlayer = new Player();
-            Attribute attr = new EarthDamageAttribute(startTier, testPlayer);
+            Attribute attr = new EarthDamageAttribute(startTier);
             
             attr.LevelUp();
             Assert.Equal(startTier + 1, attr.tier);
-            Attribute testAttr = new EarthDamageAttribute(startTier+1, testPlayer);
-            Assert.Equal(new BigInteger(0),
+            Attribute testAttr = new EarthDamageAttribute(startTier+1);
+            Assert.Equal(GetExpectedDamage(0),
                         testPlayer.passiveEarthDPS);
-            attr.ApplyEffect();
+            attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.passiveEarthDPS);
         }
@@ -31,15 +31,15 @@ namespace PixelClickerBackend
         public void TestLevelUpEquipt(){
             int startTier = 4;
             Player testPlayer = new Player();
-            Attribute attr = new EarthDamageAttribute(startTier, testPlayer);
-            attr.ApplyEffect();
+            Attribute attr = new EarthDamageAttribute(startTier);
+            attr.ApplyEffect(testPlayer);
             attr.LevelUp();
             Assert.Equal(startTier + 1, attr.tier);
-            Attribute testAttr = new EarthDamageAttribute(startTier+1, testPlayer);
+            Attribute testAttr = new EarthDamageAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.passiveEarthDPS);
-            attr.RemoveEffect();
-            Assert.Equal(new BigInteger(0),
+            attr.RemoveEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(0),
                         testPlayer.passiveEarthDPS);
         }
 
@@ -47,13 +47,13 @@ namespace PixelClickerBackend
         public void TestLevelUpAcrossManyLevels(){
             for (int i = 1; i < 1000; i+=i){
                 Player testPlayer = new Player();
-                Attribute attr = new EarthDamageAttribute(i, testPlayer);
-                Assert.Equal(new BigInteger(0),
+                Attribute attr = new EarthDamageAttribute(i);
+                Assert.Equal(GetExpectedDamage(0),
                         testPlayer.passiveEarthDPS);
-                attr.ApplyEffect();
+                attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
-                Attribute testAttr = new EarthDamageAttribute(i+1, testPlayer);
+                Attribute testAttr = new EarthDamageAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
                         testPlayer.passiveEarthDPS);
             
@@ -67,11 +67,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(1, testPlayer);
+                new EarthDamageAttribute(1);
             Assert.Equal(1, attr.tier);
-            Assert.Equal(applyFormula(1), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(1), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(1), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(1), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -79,11 +79,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(2, testPlayer);
+                new EarthDamageAttribute(2);
             Assert.Equal(2, attr.tier);
-            Assert.Equal(applyFormula(2), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(2), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(2), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(2), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -91,11 +91,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(3, testPlayer);
+                new EarthDamageAttribute(3);
             Assert.Equal(3, attr.tier);
-            Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(3), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -103,11 +103,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(4, testPlayer);
+                new EarthDamageAttribute(4);
             Assert.Equal(4, attr.tier);
-            Assert.Equal(applyFormula(4), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(4), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(4), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(4), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -115,11 +115,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(5, testPlayer);
+                new EarthDamageAttribute(5);
             Assert.Equal(5, attr.tier);
-            Assert.Equal(applyFormula(5), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(5), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(5), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(5), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -127,11 +127,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(10, testPlayer);
+                new EarthDamageAttribute(10);
             Assert.Equal(10, attr.tier);
-            Assert.Equal(applyFormula(10), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(10), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(10), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -139,11 +139,11 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(100, testPlayer);
+                new EarthDamageAttribute(100);
             Assert.Equal(100, attr.tier);
-            Assert.Equal(applyFormula(100), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(100), testPlayer.passiveEarthDPS);
+            Assert.Equal(GetExpectedDamage(100), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(100), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -151,15 +151,15 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-            new EarthDamageAttribute(3, testPlayer);
+            new EarthDamageAttribute(3);
             Assert.Equal(3, attr.tier);
-            attr.ApplyEffect();
-            Assert.True(attr.isActive);
-            attr.RemoveEffect();
-            Assert.False(attr.isActive);
-            Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(3), testPlayer.passiveEarthDPS);
+            attr.ApplyEffect(testPlayer);
+            Assert.True(attr.IsActive(testPlayer));
+            attr.RemoveEffect(testPlayer);
+            Assert.False(attr.IsActive(testPlayer));
+            Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -167,21 +167,21 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-            new EarthDamageAttribute(10, testPlayer);
+            new EarthDamageAttribute(10);
             Random r = new Random();
             for (int j = 0; j < 1000; j++)
             {
                 if (r.Next(0, 2) == 1)
                 {
-                    attr.ApplyEffect();
+                    attr.ApplyEffect(testPlayer);
                 }
                 else
-                    attr.RemoveEffect();
+                    attr.RemoveEffect(testPlayer);
             }
-            attr.ApplyEffect();
-            Assert.Equal(applyFormula(10), testPlayer.passiveEarthDPS);
-            attr.RemoveEffect();
-            Assert.Equal(new BigInteger(0), testPlayer.passiveEarthDPS);
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveEarthDPS);
+            attr.RemoveEffect(testPlayer);
+            Assert.Equal(GetExpectedDamage(0), testPlayer.passiveEarthDPS);
         }
 
         [Fact]
@@ -189,17 +189,18 @@ namespace PixelClickerBackend
         {
             Player testPlayer = new Player();
             EarthDamageAttribute attr =
-                new EarthDamageAttribute(int.MaxValue, testPlayer);
+                new EarthDamageAttribute(int.MaxValue);
             Assert.Equal(int.MaxValue, attr.tier);
-            Assert.Equal(BigInteger.Parse("4611686014132420609"), attr.GetEffectQuantity());
-            attr.ApplyEffect();
-            Assert.Equal(BigInteger.Parse("4611686014132420609"), testPlayer.passiveEarthDPS);
+            Assert.Equal(new ExpNumber(4.611, 18), attr.GetEffectQuantity()); // should be 4611686014132420609
+            attr.ApplyEffect(testPlayer);
+            Assert.Equal(new ExpNumber(4.611, 18), testPlayer.passiveEarthDPS); // should be 4611686014132420609
         }
 
-        private BigInteger applyFormula(int tier){
-            return BigInteger.Multiply(tier, tier);
+        private ExpNumber GetExpectedDamage(int tier){
+            ExpNumber damage = new ExpNumber(tier, 0);
+            damage.Pow(2);
+            return damage;
         }
-
 
 
 

@@ -1,58 +1,60 @@
 using System.Numerics;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace PixelClickerBackend
 {
     public abstract class Attribute
     {
         public string name;
         public string description;
-        protected Player player;
         public int tier;
-        public bool isActive;
+        HashSet<Player> activePlayers;
 
-        public Attribute(int tier, Player player)
+        public Attribute(int tier)
         {
             this.tier = tier;
-            this.player = player;
-            this.isActive = false;
+            activePlayers = new HashSet<Player>();
         }
 
-        public void ApplyEffect()
+        public void ApplyEffect(Player player)
         {
-            if (isActive)
+            if (activePlayers.Contains(player))
             {
                 return;
             }
-            isActive = true;
-            Apply();
+            activePlayers.Add(player);
+            Apply(player);
         }
 
-        public void RemoveEffect()
+        public void RemoveEffect(Player player)
         {
-            if (!isActive)
+            if (!activePlayers.Contains(player))
                 return;
-            isActive = false;
-            Remove();
+            activePlayers.Remove(player);
+            Remove(player);
         }
 
         public void LevelUp()
         {
-
-            if (isActive)
-            {
-                RemoveEffect();
-                this.tier += 1;
-                ApplyEffect();
+            List<Player> impactedPlayers = activePlayers.ToList();
+            foreach (Player player in impactedPlayers){
+                RemoveEffect(player);
             }
-            else
-            {
-                this.tier += 1;
+            this.tier += 1;
+            foreach (Player player in impactedPlayers){
+                ApplyEffect(player);
             }
+        }
 
-
+        public bool IsActive(Player player){
+            return activePlayers.Contains(player);
         }
 
         public abstract object GetEffectQuantity();
-        protected abstract void Apply();
-        protected abstract void Remove();
+        protected abstract void Apply(Player player);
+        protected abstract void Remove(Player player);
+
+
     }
 }

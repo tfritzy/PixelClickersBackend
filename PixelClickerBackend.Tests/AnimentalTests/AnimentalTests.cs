@@ -66,28 +66,6 @@ namespace PixelClickerBackend.Tests
 
 
         #region Testing leveling up the animental
-        [Fact]
-        public void TestAnimentalLevelUp()
-        {
-            Animental dropplet = new Dropplet(1, 1, new Player());
-            Assert.True(dropplet.AddXp(new BigInteger(100)));
-            Assert.Equal(2, dropplet.level);
-            Assert.True(dropplet.AddXp(new BigInteger(200)));
-            Assert.Equal(3, dropplet.level);
-            Assert.False(dropplet.AddXp(new BigInteger(399)));
-            Assert.Equal(3, dropplet.level);
-            Assert.True(dropplet.AddXp(new BigInteger(1)));
-            Assert.Equal(4, dropplet.level);
-        }
-
-        [Fact]
-        public void TestModerateLevelUpXp(){
-            Animental dropplet = new Dropplet(4, 1, new Player());
-            Assert.True(dropplet.AddXp(4975));
-            Assert.Equal(6, dropplet.level);
-            Assert.True(dropplet.AddXp(6542));
-            Assert.Equal(7, dropplet.level);
-        }
 
         [Fact]
         public void TestAnimentalLevelUpHighXp()

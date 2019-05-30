@@ -6,19 +6,19 @@ namespace PixelClickerBackend
     public class ExtraTeamDamageAttribute : Attribute
     {
 
-        public ExtraTeamDamageAttribute(int tier, Player player) : base(tier, player)
+        public ExtraTeamDamageAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             BigInteger oldPlayerTeamDamage = player.teamDamageBonusPercent;
             player.teamDamageBonusPercent = BigInteger.Add(oldPlayerTeamDamage,  
                                                     (BigInteger)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             BigInteger oldPlayerTeamDamage = player.teamDamageBonusPercent;
             player.teamDamageBonusPercent = BigInteger.Subtract(oldPlayerTeamDamage, 

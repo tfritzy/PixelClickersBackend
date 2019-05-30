@@ -5,21 +5,21 @@ namespace PixelClickerBackend
 {
     public class GoldFindPercentageAttribute : Attribute
     {
-        public GoldFindPercentageAttribute(int tier, Player player) : base(tier, player)
+        public GoldFindPercentageAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
-            BigInteger oldPlayerGoldFind = this.player.extraGoldFindPercentage;
+            BigInteger oldPlayerGoldFind = player.extraGoldFindPercentage;
             player.extraGoldFindPercentage = BigInteger.Add(oldPlayerGoldFind,
                                                     (BigInteger)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
-            BigInteger oldPlayerGoldFind = this.player.extraGoldFindPercentage;
+            BigInteger oldPlayerGoldFind = player.extraGoldFindPercentage;
             player.extraGoldFindPercentage = BigInteger.Subtract(oldPlayerGoldFind,
                                                     (BigInteger)GetEffectQuantity());
         }

@@ -3,27 +3,21 @@ using System.Numerics;
 
 namespace PixelClickerBackend
 {
-    public class NatureDamageAttribute : Attribute
+    public class NatureDamageAttribute : DamageAttribute
     {
-        public NatureDamageAttribute(int tier, Player player) : base(tier, player)
+        public NatureDamageAttribute(int tier) : base(tier)
         {
-
+            this.damageType = Elements.Nature;
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
-            player.passiveNatureDPS = BigInteger.Add(player.passiveNatureDPS, (BigInteger)GetEffectQuantity());
+            player.passiveNatureDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
-            
-            player.passiveNatureDPS = BigInteger.Subtract(player.passiveNatureDPS, (BigInteger)GetEffectQuantity());
-        }
-
-        public override object GetEffectQuantity()
-        {
-            return BigInteger.Multiply(this.tier, this.tier);
+            player.passiveNatureDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

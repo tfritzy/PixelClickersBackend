@@ -4,14 +4,56 @@ using System.Numerics;
 using System.Collections.Generic;
 using Xunit;
 
-namespace PixelClickerBackend.Tests {
+namespace PixelClickerBackend.Tests
+{
 
-    public class DroppletTests {
-
-       #region Testing Powering up Dropplet
+    public class DroppletTests
+    {
 
         [Fact]
-        public void TestEarlyPowerUps(){
+        public void TestDroppletConstructor()
+        {
+            Player player = new Player();
+            Animental dropplet = new Dropplet(1, 1, player);
+            Assert.Equal(Elements.Water, dropplet.element);
+        }
+
+        [Fact]
+        public void TestDroppletDamage()
+        {
+            Player player = new Player();
+            Animental dropplet = new Dropplet(1, 1, player);
+            Assert.Equal(new ExpNumber(3, 0), dropplet.damage);
+            dropplet.AddXp(100);
+            Assert.Equal(new ExpNumber(3.3, 0), dropplet.damage);
+            player.gold = new ExpNumber(3, 304923);
+            dropplet.PowerUp();
+            Assert.Equal(new ExpNumber(3.3 * 1.01, 0), dropplet.damage);
+            dropplet.PowerUp();
+            Assert.Equal(new ExpNumber(3.3 * 1.01 * 1.01, 0), dropplet.damage);
+            dropplet.AddXp(200);
+            Assert.Equal(new ExpNumber(3.3 * 1.01 * 1.01 * 1.1, 0), dropplet.damage);
+        }
+
+        [Fact]
+        public void TestLevelUpDropplet(){
+            Player player = new Player();
+            Animental dropplet = new Dropplet(1, 1, player);
+
+            BigInteger xp = new BigInteger(90);
+            for (int i = 2; i < 100; i++){
+                dropplet.AddXp((xp));
+                xp = BigInteger.Multiply(xp, 2);
+                Assert.Equal(i, dropplet.level);
+            }
+        }
+
+
+        #region Testing Powering up Dropplet
+
+        [Fact]
+        public void TestEarlyPowerUps()
+        {
             Player player = new Player();
             Animental dropplet = new Dropplet(1, 1, player);
             Assert.False(dropplet.PowerUp());
@@ -58,7 +100,7 @@ namespace PixelClickerBackend.Tests {
             Assert.Equal(1, player.GetGemCount(1, GemType.Ruby));
             Assert.Equal(1, player.GetGemCount(1, GemType.Topaz));
             Assert.Equal(1, player.GetGemCount(1, GemType.Emerald));
-            
+
             // Upgrade 5 costs 14.641 gold
             player.gold = new ExpNumber(15, 0);
             expectedGold = new ExpNumber(15, 0);
@@ -68,22 +110,23 @@ namespace PixelClickerBackend.Tests {
         }
 
         [Fact]
-        public void TestPowerUpGems(){
+        public void TestPowerUpGems()
+        {
             Player player = new Player();
             player.gold = new ExpNumber(500, 20);
             Random random = new Random();
-            Animental dropplet = new Dropplet(random.Next(1, 100),  3, player);
+            Animental dropplet = new Dropplet(random.Next(1, 100), 3, player);
             Assert.True(dropplet.PowerUp()); // Can do level 3 because it doesn't require any gems. 
             Assert.False(dropplet.PowerUp()); // Can't do level 4 because it requires 1 tier 1 gem. 
             player.AddGems(1, 1, GemType.Sapphire);
             Assert.True(dropplet.PowerUp()); // Can now do the level up because it has the gem. 
-            
+
             dropplet.powerLevel = 9;
             Assert.False(dropplet.PowerUp()); // This power up costs 2 tier 1 gems. 
             player.AddGems(1, 2, GemType.Sapphire);
             Assert.True(dropplet.PowerUp()); // Now have the required gems. 
             Assert.Equal(0, player.GetGemCount(2, GemType.Sapphire));
-            
+
             player = new Player();
             player.gold = new ExpNumber(5.0, 400);
             dropplet = new Dropplet(1, 14, player);
@@ -118,42 +161,53 @@ namespace PixelClickerBackend.Tests {
             player.AddGems(3, 2, GemType.Sapphire);
             Assert.True(dropplet.PowerUp()); // Can now do the power up;
             Assert.Equal(1, player.GetGemCount(3, GemType.Sapphire)); // Should be 1 tier 3 gem left.
+
+            dropplet.powerLevel = 88;
+            Assert.True(dropplet.PowerUp()); // This upgrade costs 1 tier 3 gem;
+            Assert.False(dropplet.PowerUp());
+
         }
 
 
-        private ExpNumber GetPowerUpPrice(int level){
+        private ExpNumber GetPowerUpPrice(int level)
+        {
             ExpNumber baseNumber = new ExpNumber(10, 0);
             ExpNumber exponent = new ExpNumber(1.1, 0);
-            exponent.Pow(level-1);
+            exponent.Pow(level - 1);
             baseNumber.Multiply(exponent);
             return baseNumber;
         }
 
 
-        public void TestThatAttributeLevelIncreasesOnPowerup(){
+        public void TestThatAttributeLevelIncreasesOnPowerup()
+        {
             Player player = new Player();
             Animental dropplet = new Dropplet(1, 1, player);
+            dropplet.PowerUp();
             
         }
 
 
         [Fact]
-        public void TestLargeCostUpgrades(){
+        public void TestLargeCostUpgrades()
+        {
             Animental dropplet = new Dropplet(1, 1, new Player());
-            for (int i = 1; i < 100000000; i+=i){
+            for (int i = 1; i < 100000000; i += i)
+            {
                 Assert.True(dropplet.GetPowerUpPrice().CompareTo(new ExpNumber(0, 0)) > 0);
                 dropplet.powerLevel += 1;
             }
         }
 
         [Fact]
-        public void TestLatePowerUps(){
+        public void TestLatePowerUps()
+        {
             Player player = new Player();
             Animental dropplet = new Dropplet(1, 1342, player);
             ExpNumber expected = GetPowerUpPrice(1342);
             Assert.Equal(expected, dropplet.GetPowerUpPrice());
         }
-        
+
         #endregion
     }
 }

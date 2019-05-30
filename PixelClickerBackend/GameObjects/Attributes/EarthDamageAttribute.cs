@@ -3,27 +3,22 @@ using System.Numerics;
 
 namespace PixelClickerBackend
 {
-    public class EarthDamageAttribute : Attribute
+    public class EarthDamageAttribute : DamageAttribute
     {
 
-        public EarthDamageAttribute(int tier, Player player) : base(tier, player)
+        public EarthDamageAttribute(int tier) : base(tier)
         {
-
+            this.damageType = Elements.Earth;
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
-            player.passiveEarthDPS = BigInteger.Add(player.passiveEarthDPS, (BigInteger)GetEffectQuantity());
+            player.passiveEarthDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
-            player.passiveEarthDPS = BigInteger.Subtract(player.passiveEarthDPS, (BigInteger)GetEffectQuantity());
-        }
-
-        public override object GetEffectQuantity()
-        {
-            return BigInteger.Multiply(this.tier, this.tier);
+            player.passiveEarthDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

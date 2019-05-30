@@ -22,21 +22,14 @@ namespace PixelClickerBackend.Tests
         {
             Gem topaz = new Topaz(3, new Player());
             Assert.Equal(3, topaz.GetAttributeCount());
-            Assert.True(DoesListContainAttribute(topaz, typeof(EarthDamageAttribute)));
-            Assert.True(DoesListContainAttribute(topaz, typeof(CritHitChanceAttribute)));
-            Assert.True(DoesListContainAttribute(topaz, typeof(DamageIncreasePercentageAttribute)));
+            Assert.True(DoesGemContainAttribute(topaz, typeof(EarthDamageAttribute)));
+            Assert.True(DoesGemContainAttribute(topaz, typeof(CritHitChanceAttribute)));
+            Assert.True(DoesGemContainAttribute(topaz, typeof(DamageIncreasePercentageAttribute)));
         }
 
-        private bool DoesListContainAttribute(Gem gem, Type desiredAttribute)
-        {
-            Attribute[] attrs = gem.GetAttributes();
-            for (int i = 0; i < gem.GetAttributeCount(); i++)
-            {
-                Attribute attr = gem.GetAttributes()[i];
-                if (attr.GetType() == desiredAttribute)
-                    return true;
-            }
-            return false;
+        private bool DoesGemContainAttribute(Gem gem, Type desiredAttribute)
+        { 
+            return gem.Contains(desiredAttribute);
         }
 
         [Fact]
@@ -46,16 +39,16 @@ namespace PixelClickerBackend.Tests
             for (int i = 1; i < 10000; i += i)
             {
                 Player testPlayer = new Player();
-                EarthDamageAttribute earthDamage = new EarthDamageAttribute(i, testPlayer);
+                EarthDamageAttribute earthDamage = new EarthDamageAttribute(i);
                 CritHitChanceAttribute critHitChance =
-                    new CritHitChanceAttribute(i, testPlayer);
+                    new CritHitChanceAttribute(i);
                 DamageIncreasePercentageAttribute damageIncrease =
-                    new DamageIncreasePercentageAttribute(i, testPlayer);
+                    new DamageIncreasePercentageAttribute(i);
 
-                Assert.Equal(0, testPlayer.passiveNatureDPS);
-                Assert.Equal(0, testPlayer.passiveEarthDPS);
-                Assert.Equal(0, testPlayer.passiveFireDPS);
-                Assert.Equal(0, testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
 
                 Gem topaz = new Topaz(i, testPlayer);
 
@@ -64,15 +57,15 @@ namespace PixelClickerBackend.Tests
                 {
                     if (r.Next(0, 2) == 1)
                     {
-                        topaz.Apply();
+                        topaz.MakeAllActive();
                     }
                     else
-                        topaz.Remove();
+                        topaz.MakeAllInactive();
                 }
-                topaz.Apply();
+                topaz.MakeAllActive();
 
                 Assert.Equal(testPlayer.passiveEarthDPS,
-                    (BigInteger)earthDamage.GetEffectQuantity());
+                    (ExpNumber)earthDamage.GetEffectQuantity());
                 Assert.Equal(testPlayer.critHitChance,
                     (float)critHitChance.GetEffectQuantity());
                 Assert.Equal(testPlayer.damageIncreasePercentage,

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace PixelClickerBackend
 {
@@ -10,15 +11,11 @@ namespace PixelClickerBackend
             this.element = Elements.Nature;
         }
 
-        protected override Attribute[] SetupAttributes()
+        protected override void SetupAttributes()
         {
-            List<Attribute> attrs = new List<Attribute>();
-
-            attrs.Add(new NatureDamageAttribute(this.tier, this.player));
-            attrs.Add(new GemDropChanceAttribute(this.tier, this.player));
-            attrs.Add(new EnemyLifeReductionAttribute(this.tier, this.player));
-
-            return attrs.ToArray();
+            this.attributes.Add(typeof(NatureDamageAttribute), new NatureDamageAttribute(this.tier));
+            this.attributes.Add(typeof(GemDropChanceAttribute), new GemDropChanceAttribute(this.tier));
+            this.attributes.Add(typeof(EnemyLifeReductionAttribute), new EnemyLifeReductionAttribute(this.tier));
         }
     }
 }

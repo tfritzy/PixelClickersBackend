@@ -31,13 +31,7 @@ namespace PixelClickerBackend.Tests
 
         private bool DoesListContainAttribute(Gem gem, Type desiredAttribute)
         {
-
-            foreach (Attribute attr in gem.GetAttributes())
-            {
-                if (attr.GetType() == desiredAttribute)
-                    return true;
-            }
-            return false;
+            return gem.Contains(desiredAttribute);
         }
 
         [Fact]
@@ -47,15 +41,15 @@ namespace PixelClickerBackend.Tests
             for (int i = 1; i < 10000; i += i)
             {
                 Player testPlayer = new Player();
-                WaterDamageAttribute wda = new WaterDamageAttribute(i, testPlayer);
+                WaterDamageAttribute wda = new WaterDamageAttribute(i);
                 PercentExtraXPPerKillAttribute pxp = 
-                    new PercentExtraXPPerKillAttribute(i, testPlayer);
-                CooldownReductionAttribute cdr = new CooldownReductionAttribute(i, testPlayer);
+                    new PercentExtraXPPerKillAttribute(i);
+                CooldownReductionAttribute cdr = new CooldownReductionAttribute(i);
 
-                Assert.Equal(0, testPlayer.passiveNatureDPS);
-                Assert.Equal(0, testPlayer.passiveEarthDPS);
-                Assert.Equal(0, testPlayer.passiveFireDPS);
-                Assert.Equal(0, testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
                
 
                 Gem s = new Sapphire(i, testPlayer);
@@ -64,14 +58,14 @@ namespace PixelClickerBackend.Tests
                 {
                     if (r.Next(0, 2) == 1)
                     {
-                        s.Apply();
+                        s.MakeAllActive();
                     }
                     else
-                        s.Remove();
+                        s.MakeAllInactive();
                 }
-                s.Apply();
+                s.MakeAllActive();
 
-                Assert.Equal((BigInteger)wda.GetEffectQuantity(), testPlayer.passiveWaterDPS);
+                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.passiveWaterDPS);
                 Assert.Equal((BigInteger)pxp.GetEffectQuantity(),
                     testPlayer.percentExtraXPPerKill);
                 Assert.Equal((float)cdr.GetEffectQuantity(), (testPlayer.cooldownReduction));

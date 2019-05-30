@@ -3,28 +3,22 @@ using System.Numerics;
 
 namespace PixelClickerBackend
 {
-    public class WaterDamageAttribute : Attribute
+    public class WaterDamageAttribute : DamageAttribute
     {
 
-        public WaterDamageAttribute(int tier, Player player) : base(tier, player)
+        public WaterDamageAttribute(int tier) : base(tier)
         {
-
+            this.damageType = Elements.Water;
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
-            player.passiveWaterDPS = BigInteger.Add(player.passiveWaterDPS, (BigInteger)GetEffectQuantity());
+            player.passiveWaterDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
-            player.passiveWaterDPS = BigInteger.Subtract(player.passiveWaterDPS, (BigInteger)GetEffectQuantity());
-        }
-
-        public override object GetEffectQuantity()
-        {
-            return BigInteger.Multiply(new BigInteger((long)this.tier),
-                                       new BigInteger((long)this.tier));
+            player.passiveWaterDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

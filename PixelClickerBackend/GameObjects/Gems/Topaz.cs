@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace PixelClickerBackend
 {
     public class Topaz : Gem
@@ -6,15 +9,14 @@ namespace PixelClickerBackend
         {
             this.type = GemType.Topaz;
             this.element = Elements.Earth;
+            
         }
 
-        protected override Attribute[] SetupAttributes()
+        protected override void SetupAttributes()
         {
-            Attribute[] attributes = new Attribute[3];
-            attributes[0] = new EarthDamageAttribute(this.tier, this.player);
-            attributes[1] = new CritHitChanceAttribute(this.tier, this.player);
-            attributes[2] = new DamageIncreasePercentageAttribute(this.tier, this.player);
-            return attributes;
+            this.attributes.Add(typeof(EarthDamageAttribute), new EarthDamageAttribute(this.tier));
+            this.attributes.Add(typeof(CritHitChanceAttribute), new CritHitChanceAttribute(this.tier));
+            this.attributes.Add(typeof(DamageIncreasePercentageAttribute), new DamageIncreasePercentageAttribute(this.tier));
         }
     }
 }

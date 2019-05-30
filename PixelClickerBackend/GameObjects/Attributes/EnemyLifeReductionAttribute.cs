@@ -5,17 +5,17 @@ namespace PixelClickerBackend
     public class EnemyLifeReductionAttribute : Attribute
     {
 
-        public EnemyLifeReductionAttribute(int tier, Player player) : base(tier, player)
+        public EnemyLifeReductionAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             player.enemyHealthPercentageReduction += (float)GetEffectQuantity();
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             player.enemyHealthPercentageReduction -= (float)GetEffectQuantity();
         }

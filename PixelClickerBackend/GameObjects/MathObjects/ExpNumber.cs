@@ -20,6 +20,11 @@ namespace PixelClickerBackend
             this.significand = Round(this.significand);
         }
 
+        public ExpNumber(){
+            this.significand = 0;
+            this.magnitude = 0;
+        }
+
         /// <summary>
         ///  Raises this number to the power of the passed value
         ///  Node that passing in values
@@ -148,7 +153,7 @@ namespace PixelClickerBackend
                 this.magnitude = 0;
                 return;
             }
-            while (Math.Abs(this.significand) >= 10f)
+            while (Math.Abs(this.significand) >= 10.0)
             {
                 this.significand /= 10.0;
                 this.magnitude += 1;

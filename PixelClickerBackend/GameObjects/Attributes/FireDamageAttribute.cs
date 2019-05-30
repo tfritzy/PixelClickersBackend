@@ -3,29 +3,22 @@ using System.Numerics;
 
 namespace PixelClickerBackend
 {
-    public class FireDamageAttribute : Attribute
+    public class FireDamageAttribute : DamageAttribute
     {
 
-        public FireDamageAttribute(int tier, Player player) : base(tier, player)
+        public FireDamageAttribute(int tier) : base(tier)
         {
-
+            this.damageType = Elements.Fire;
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
-            player.passiveFireDPS = BigInteger.Add(player.passiveFireDPS, 
-                (BigInteger)GetEffectQuantity());
+            player.passiveFireDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
-            player.passiveFireDPS = BigInteger.Subtract(player.passiveFireDPS, 
-               (BigInteger)GetEffectQuantity());
-        }
-
-        public override object GetEffectQuantity()
-        {
-            return BigInteger.Multiply(this.tier, this.tier);
+            player.passiveFireDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

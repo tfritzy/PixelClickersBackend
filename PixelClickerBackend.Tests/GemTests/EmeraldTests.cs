@@ -10,6 +10,13 @@ namespace PixelClickerBackend.Tests
 
         #region Testing Emerald Basics
         [Fact]
+        public void TestClass(){
+            Emerald emerald = new Emerald(1, new Player());
+            Assert.True(emerald.GetType().IsSubclassOf(typeof(AttributeGroup)));
+            Assert.True(emerald.GetType().IsSubclassOf(typeof(Gem)));
+        }
+        
+        [Fact]
         public void TestEmeraldBasics()
         {
             Gem emerald = new Emerald(5, new Player());
@@ -30,22 +37,46 @@ namespace PixelClickerBackend.Tests
         {
             Gem emerald = new Emerald(100, new Player());
             Assert.Equal(3, emerald.GetAttributeCount());
-            Assert.True(DoesListContainAttribute(emerald, typeof(NatureDamageAttribute)));
-            Assert.True(DoesListContainAttribute(emerald, typeof(GemDropChanceAttribute)));
-            Assert.True(DoesListContainAttribute(emerald, typeof(EnemyLifeReductionAttribute)));
+            Assert.True(emerald.Contains(typeof(NatureDamageAttribute)));
+            Assert.True(emerald.Contains(typeof(GemDropChanceAttribute)));
+            Assert.True(emerald.Contains(typeof(EnemyLifeReductionAttribute)));
         }
 
 
-        private bool DoesListContainAttribute(Gem gem, Type desiredAttribute)
-        {
+        [Fact]
+        public void TestEmeraldDamage(){
+            Emerald emerald = new Emerald(1, new Player());
+            Assert.Equal(new ExpNumber(1, 0), emerald.GetDamage());
 
-            foreach (Attribute attr in gem.GetAttributes())
-            {
-                if (attr.GetType() == desiredAttribute)
-                    return true;
-            }
-            return false;
+            emerald = new Emerald(2, new Player());
+            Assert.Equal(new ExpNumber(4, 0), emerald.GetDamage());
+
+            emerald = new Emerald(3, new Player());
+            Assert.Equal(new ExpNumber(9, 0), emerald.GetDamage());
+
+            emerald = new Emerald(4, new Player());
+            Assert.Equal(new ExpNumber(1.6, 1), emerald.GetDamage());
+
+            emerald = new Emerald(5, new Player());
+            Assert.Equal(new ExpNumber(2.5, 1), emerald.GetDamage());
+
+            emerald = new Emerald(6, new Player());
+            Assert.Equal(new ExpNumber(3.6, 1), emerald.GetDamage());
+
+            emerald = new Emerald(7, new Player());
+            Assert.Equal(new ExpNumber(4.9, 1), emerald.GetDamage());
+
+            emerald = new Emerald(100, new Player());
+            Assert.Equal(new ExpNumber(1, 4), emerald.GetDamage());
+
+
+            emerald = new Emerald(1000, new Player());
+            Assert.Equal(new ExpNumber(1, 6), emerald.GetDamage());
+
+            emerald = new Emerald(1000000, new Player());
+            Assert.Equal(new ExpNumber(1, 12), emerald.GetDamage());
         }
+
         #endregion
 
 
@@ -57,20 +88,20 @@ namespace PixelClickerBackend.Tests
             for (int i = 1; i < 10000; i += i)
             {
                 Player testPlayer = new Player();
-                NatureDamageAttribute nda = new NatureDamageAttribute(i, testPlayer);
+                NatureDamageAttribute nda = new NatureDamageAttribute(i);
                 GemDropChanceAttribute gdc = 
-                    new GemDropChanceAttribute(i, testPlayer);
-                EnemyLifeReductionAttribute elr = new EnemyLifeReductionAttribute(i, testPlayer);
+                    new GemDropChanceAttribute(i);
+                EnemyLifeReductionAttribute elr = new EnemyLifeReductionAttribute(i);
 
-                Assert.Equal(0, testPlayer.passiveNatureDPS);
-                Assert.Equal(0, testPlayer.passiveEarthDPS);
-                Assert.Equal(0, testPlayer.passiveFireDPS);
-                Assert.Equal(0, testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
                
                 Gem s = new Emerald(i, testPlayer);
-                s.Apply();
+                s.MakeAllActive();
 
-                Assert.Equal(testPlayer.passiveNatureDPS, (BigInteger)nda.GetEffectQuantity());
+                Assert.Equal(testPlayer.passiveNatureDPS, (ExpNumber)nda.GetEffectQuantity());
                 Assert.Equal(testPlayer.gemDropChance, (float)gdc.GetEffectQuantity());
                 Assert.Equal(testPlayer.enemyHealthPercentageReduction, (float)elr.GetEffectQuantity());
             }
@@ -90,9 +121,6 @@ namespace PixelClickerBackend.Tests
             Assert.Equal(quantity, testPlayer.GetGemCount(randTier, GemType.Emerald));
             
         }
-        
-
-        
 
         #endregion
     }

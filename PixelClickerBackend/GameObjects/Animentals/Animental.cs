@@ -11,9 +11,14 @@ namespace PixelClickerBackend
         public BigInteger xp;
         public Gem heldGem;
         public AnimentalTier tier;
-        private Player player;
-
+        public Player player;
+        public Elements element;
+        public ExpNumber damage;
+        protected ExpNumber levelUpDamageScalingFactor;
+        protected ExpNumber powerUpDamageScalingFactor;
+        protected double percentOfNormXpRequiredForLevelUp;
         private readonly int POWER_SPIKE_INTERVAL = 5;
+        private readonly int XP_INCREASE_FACTOR_PER_LEVEL = 2;
 
         public Animental(int level, int powerLevel, Player player)
         {
@@ -60,16 +65,21 @@ namespace PixelClickerBackend
             BigInteger levelRequirement = GetLevelUpXpRequirement();
             while (this.xp >= levelRequirement){
                 this.xp -= levelRequirement;
-                this.level += 1;
+                LevelUp();
                 leveledUp = true;
                 levelRequirement = GetLevelUpXpRequirement();
             }
             return leveledUp;
         }
 
+        private void LevelUp(){
+            this.level += 1;
+            this.damage.Multiply(levelUpDamageScalingFactor);
+        }
+
         public BigInteger GetLevelUpXpRequirement(){
-            BigInteger baseXp = new BigInteger(100);
-            return BigInteger.Multiply(baseXp, BigInteger.Pow(2, this.level-1));
+            BigInteger baseXp = new BigInteger((int)(100*percentOfNormXpRequiredForLevelUp));
+            return BigInteger.Multiply(baseXp, BigInteger.Pow(XP_INCREASE_FACTOR_PER_LEVEL, this.level-1));
         }
 
         public bool PowerUp(){
@@ -81,6 +91,7 @@ namespace PixelClickerBackend
             this.player.AddGems(GetPowerUpGemTier(), -GetPowerUpGemQuantity(), GemType.Sapphire);
             player.gold.Subtract(GetPowerUpPrice());
             this.powerLevel += 1; 
+            this.damage.Multiply(this.powerUpDamageScalingFactor);
             return true;
 
         }
@@ -107,6 +118,11 @@ namespace PixelClickerBackend
             exponent.Pow(this.powerLevel-1);
             baseNumber.Multiply(exponent);
             return baseNumber;
+        }
+
+        public void GiveGem(Gem gem){
+            this.heldGem = gem;
+            
         }
     }
 

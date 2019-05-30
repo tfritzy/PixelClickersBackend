@@ -1,50 +1,42 @@
 using System;
+using System.Collections.Generic;
 
 namespace PixelClickerBackend
 {
-    public abstract class Gem
+    public abstract class Gem : AttributeGroup
     {
         public int tier;
         public GemType type;
-        protected Attribute[] attributes;
         public Elements element;
-        protected Player player;
 
-        public Gem(int tier, Player player)
+        public Gem(int tier, Player player) : base(player)
         {
             if (tier < 1)
                 throw new ArgumentException("Gems cannot have a tier lower than 1");
             this.tier = tier;
-            this.player = player;
-            this.attributes = SetupAttributes();
-
+            SetupAttributes();
         }
-        public void Apply()
-        {
-            foreach (Attribute attribute in this.attributes)
-            {
-                attribute.ApplyEffect();
-            }
-        }
+    
 
-        public void Remove()
-        {
-            foreach (Attribute attribute in this.attributes)
-            {
-                attribute.RemoveEffect();
-            }
-        }
+        protected abstract void SetupAttributes();
 
-        protected abstract Attribute[] SetupAttributes();
-
-        public Attribute[] GetAttributes()
+        public Dictionary<Type, Attribute> GetAttributes()
         {
             return this.attributes;
         }
 
         public int GetAttributeCount()
         {
-            return this.attributes.Length;
+            return this.attributes.Count;
+        }
+
+        public ExpNumber GetDamage(){
+            foreach (Attribute attribute in this.attributes.Values){
+                if (attribute.GetType().IsSubclassOf(typeof(DamageAttribute))){
+                    return ((DamageAttribute)attribute).GetDamage();
+                }
+            }
+            return null;
         }
 
     }

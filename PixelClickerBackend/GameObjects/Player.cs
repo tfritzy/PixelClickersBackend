@@ -15,10 +15,10 @@ namespace PixelClickerBackend
         public ExpNumber gold;
         public Gem[] gems;
         public BigInteger clickDamage;
-        public BigInteger passiveWaterDPS;
-        public BigInteger passiveFireDPS;
-        public BigInteger passiveNatureDPS;
-        public BigInteger passiveEarthDPS;
+        public ExpNumber passiveWaterDPS;
+        public ExpNumber passiveFireDPS;
+        public ExpNumber passiveNatureDPS;
+        public ExpNumber passiveEarthDPS;
         public float gemDropChance;
         public float enemyHealthPercentageReduction;
         public BigInteger extraGoldFindPercentage;
@@ -39,6 +39,10 @@ namespace PixelClickerBackend
             sapphires = new Dictionary<int, int>();
             topaz = new Dictionary<int, int>();
             this.gold = new ExpNumber(0, 0);
+            this.passiveEarthDPS = new ExpNumber(0, 0);
+            this.passiveFireDPS = new ExpNumber(0, 0);
+            this.passiveWaterDPS = new ExpNumber(0, 0);
+            this.passiveNatureDPS = new ExpNumber(0, 0);
         }
 
         public int GetGemCount(int tier, GemType gemType){

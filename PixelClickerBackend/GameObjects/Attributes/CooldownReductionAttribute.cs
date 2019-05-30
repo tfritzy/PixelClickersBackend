@@ -6,17 +6,17 @@ namespace PixelClickerBackend
     public class CooldownReductionAttribute: Attribute
     {
 
-        public CooldownReductionAttribute(int tier, Player player) : base(tier, player)
+        public CooldownReductionAttribute(int tier) : base(tier)
         {
 
         }
 
-        protected override void Apply()
+        protected override void Apply(Player player)
         {
             player.cooldownReduction += (float)GetEffectQuantity();
         }
 
-        protected override void Remove()
+        protected override void Remove(Player player)
         {
             player.cooldownReduction -= (float)GetEffectQuantity();
         }

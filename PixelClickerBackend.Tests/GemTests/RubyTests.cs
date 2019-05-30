@@ -2,6 +2,7 @@ using System;
 using Xunit;
 using PixelClickerBackend;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace PixelClickerBackend.Tests
 {
@@ -22,16 +23,16 @@ namespace PixelClickerBackend.Tests
         {
             Player player = new Player();
             Gem ruby = new Ruby(5, player);
-            ruby.Apply();
-            Attribute[] attrs = ruby.GetAttributes();
-            foreach (Attribute attr in attrs)
+            ruby.MakeAllActive();
+            Dictionary<Type, Attribute> attrs = ruby.GetAttributes();
+            foreach (Attribute attr in attrs.Values)
             {
-                Assert.True(attr.isActive);
+                Assert.True(attr.IsActive(player));
             }
-            ruby.Remove();
-            foreach (Attribute attr in attrs)
+            ruby.MakeAllInactive();
+            foreach (Attribute attr in attrs.Values)
             {
-                Assert.False(attr.isActive);
+                Assert.False(attr.IsActive(player));
             }
         }
 
@@ -48,13 +49,7 @@ namespace PixelClickerBackend.Tests
 
         private bool DoesListContainAttribute(Gem gem, Type desiredAttribute)
         {
-
-            foreach (Attribute attr in gem.GetAttributes())
-            {
-                if (attr.GetType() == desiredAttribute)
-                    return true;
-            }
-            return false;
+            return gem.Contains(desiredAttribute);
         }
 
         [Fact]
@@ -64,15 +59,15 @@ namespace PixelClickerBackend.Tests
             for (int i = 1; i < 10000; i += i)
             {
                 Player testPlayer = new Player();
-                FireDamageAttribute wda = new FireDamageAttribute(i, testPlayer);
+                FireDamageAttribute wda = new FireDamageAttribute(i);
                 GoldFindPercentageAttribute pxp =
-                    new GoldFindPercentageAttribute(i, testPlayer);
-                ExtraTeamDamageAttribute cdr = new ExtraTeamDamageAttribute(i, testPlayer);
+                    new GoldFindPercentageAttribute(i);
+                ExtraTeamDamageAttribute cdr = new ExtraTeamDamageAttribute(i);
 
-                Assert.Equal(0, testPlayer.passiveNatureDPS);
-                Assert.Equal(0, testPlayer.passiveEarthDPS);
-                Assert.Equal(0, testPlayer.passiveFireDPS);
-                Assert.Equal(0, testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
 
 
                 Gem s = new Ruby(i, testPlayer);
@@ -81,14 +76,14 @@ namespace PixelClickerBackend.Tests
                 {
                     if (r.Next(0, 2) == 1)
                     {
-                        s.Apply();
+                        s.MakeAllActive();
                     }
                     else
-                        s.Remove();
+                        s.MakeAllInactive();
                 }
-                s.Apply();
+                s.MakeAllActive();
 
-                Assert.Equal((BigInteger)wda.GetEffectQuantity(), testPlayer.passiveFireDPS);
+                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.passiveFireDPS);
                 Assert.Equal((BigInteger)pxp.GetEffectQuantity(),
                     testPlayer.extraGoldFindPercentage);
                 Assert.Equal((BigInteger)cdr.GetEffectQuantity(), (testPlayer.teamDamageBonusPercent));
