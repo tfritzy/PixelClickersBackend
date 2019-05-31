@@ -92,8 +92,8 @@ namespace PixelClickerBackend
                 this.significand *= -1;
             }
             this.significand -= subtractValue.significand /
-                                (double)Math.Pow(10, this.magnitude -
-                                                    subtractValue.magnitude);
+                                Math.Pow(10.0, this.magnitude -
+                                        subtractValue.magnitude);
 
             ShiftSignificandIntoMagnitude();
             this.significand = Round(significand);
@@ -117,8 +117,8 @@ namespace PixelClickerBackend
                 subtractValue.magnitude = tempMagnitude;
             }
             this.significand += subtractValue.significand /
-                                (double)Math.Pow(10, this.magnitude -
-                                                    subtractValue.magnitude);
+                                Math.Pow(10.0, this.magnitude -
+                                subtractValue.magnitude);
 
             ShiftSignificandIntoMagnitude();
             this.significand = Round(significand);
@@ -148,7 +148,7 @@ namespace PixelClickerBackend
 
         private void ShiftSignificandIntoMagnitude()
         {
-            if (this.significand == 0)
+            if (this.significand == 0.0)
             {
                 this.magnitude = 0;
                 return;
@@ -158,8 +158,7 @@ namespace PixelClickerBackend
                 this.significand /= 10.0;
                 this.magnitude += 1;
             }
-
-            while (Math.Abs(this.significand) < 1f && Math.Abs(this.significand) >= 0)
+            while (Math.Abs(this.significand) <= .99999)
             {
                 this.significand *= 10.0;
                 this.magnitude -= 1;

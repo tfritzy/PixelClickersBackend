@@ -64,8 +64,9 @@ namespace PixelClickerBackend.Tests {
             enemy.DealDamage(amountOfDamage, player, Elements.Fire);
             prevEnemyHealth.Subtract(amountOfDamage);
             Assert.Equal(prevEnemyHealth, enemy.Health);
-
         }
+
+        
 
     }
 

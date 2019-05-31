@@ -413,7 +413,7 @@ namespace PixelClickerBackend.Tests
         public void TestManySmallSubtractions()
         {
             Random random = new Random();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1000000; i++)
             {
                 double num1 = random.Next(-100000, 100000);
                 double num2 = random.Next(-100000, 100000);
