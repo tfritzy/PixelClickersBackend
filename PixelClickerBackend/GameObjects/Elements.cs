@@ -5,5 +5,6 @@ public enum Elements
     Nature,
     Fire,
     Water,
-    Earth
+    Earth, 
+    Normal
 };

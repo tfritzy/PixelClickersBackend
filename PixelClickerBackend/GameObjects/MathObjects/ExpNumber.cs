@@ -12,6 +12,8 @@ namespace PixelClickerBackend
         public int magnitude;
         private static int PRECISION_DIGITS = 5;
 
+        public static ExpNumber ZERO = new ExpNumber();
+
         public ExpNumber(double significand, int magnitude)
         {
             this.significand = significand;
@@ -219,6 +221,13 @@ namespace PixelClickerBackend
         public override int GetHashCode()
         {
             return (this.significand + "e" + this.magnitude).GetHashCode();
+        }
+
+        public bool IsPositive(){
+            if (this.significand > 0){
+                return true;
+            }
+            return false;
         }
     }
 }
