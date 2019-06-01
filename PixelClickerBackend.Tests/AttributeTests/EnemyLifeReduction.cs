@@ -21,10 +21,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new EnemyLifeReductionAttribute(startTier+1);
             Assert.Equal(0f,
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -37,10 +37,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new EnemyLifeReductionAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(0f,
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -49,13 +49,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new EnemyLifeReductionAttribute(i);
                 Assert.Equal(0f,
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new EnemyLifeReductionAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.enemyHealthPercentageReduction);
+                        testPlayer.Stats.enemyHealthPercentageReduction);
             
             }
         }
@@ -71,7 +71,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(applyFormula(1), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(1), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(1), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(applyFormula(2), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(2), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(2), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(applyFormula(4), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(4), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(4), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(applyFormula(5), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(5), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(5), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(applyFormula(10), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(applyFormula(100), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(100), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(100), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         [Fact]
@@ -179,9 +179,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.enemyHealthPercentageReduction);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(0f, testPlayer.enemyHealthPercentageReduction);
+            Assert.Equal(0f, testPlayer.Stats.enemyHealthPercentageReduction);
         }
 
         private float applyFormula(int tier){

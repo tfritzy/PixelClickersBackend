@@ -8,12 +8,12 @@ namespace PixelClickerBackend {
         }
         protected override void Apply(Player player)
         {
-            player.clickDamage.Add((ExpNumber)GetEffectQuantity());
+            player.Stats.clickDamage.Add((ExpNumber)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            player.clickDamage.Subtract((ExpNumber)GetEffectQuantity());
+            player.Stats.clickDamage.Subtract((ExpNumber)GetEffectQuantity());
         }
 
         public override object GetEffectQuantity()

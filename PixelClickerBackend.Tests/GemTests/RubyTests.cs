@@ -64,10 +64,10 @@ namespace PixelClickerBackend.Tests
                     new GoldFindPercentageAttribute(i);
                 ExtraTeamDamageAttribute cdr = new ExtraTeamDamageAttribute(i);
 
-                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveWaterDPS);
 
 
                 Gem s = new Ruby(i, testPlayer);
@@ -83,10 +83,10 @@ namespace PixelClickerBackend.Tests
                 }
                 s.MakeAllActive();
 
-                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.passiveFireDPS);
+                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.Stats.passiveFireDPS);
                 Assert.Equal((BigInteger)pxp.GetEffectQuantity(),
-                    testPlayer.extraGoldFindPercentage);
-                Assert.Equal((BigInteger)cdr.GetEffectQuantity(), (testPlayer.teamDamageBonusPercent));
+                    testPlayer.Stats.extraGoldFindPercentage);
+                Assert.Equal((BigInteger)cdr.GetEffectQuantity(), (testPlayer.Stats.teamDamageBonusPercent));
 
 
             }

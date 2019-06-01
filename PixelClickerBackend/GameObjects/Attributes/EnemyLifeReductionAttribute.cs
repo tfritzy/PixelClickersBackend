@@ -12,12 +12,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.enemyHealthPercentageReduction += (float)GetEffectQuantity();
+            player.Stats.enemyHealthPercentageReduction += (float)GetEffectQuantity();
         }
 
         protected override void Remove(Player player)
         {
-            player.enemyHealthPercentageReduction -= (float)GetEffectQuantity();
+            player.Stats.enemyHealthPercentageReduction -= (float)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()

@@ -13,12 +13,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.damageIncreasePercentage += (BigInteger)GetEffectQuantity();
+            player.Stats.damageIncreasePercentage += (BigInteger)GetEffectQuantity();
         }
 
         protected override void Remove(Player player)
         {
-            player.damageIncreasePercentage -= (BigInteger)GetEffectQuantity();
+            player.Stats.damageIncreasePercentage -= (BigInteger)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()

@@ -26,7 +26,7 @@ namespace PixelClickerBackend.Tests
             Assert.Equal(new ExpNumber(3, 0), dropplet.damage);
             dropplet.AddXp(100);
             Assert.Equal(new ExpNumber(3.3, 0), dropplet.damage);
-            player.gold = new ExpNumber(3, 304923);
+            player.Stats.gold = new ExpNumber(3, 304923);
             dropplet.PowerUp();
             Assert.Equal(new ExpNumber(3.3 * 1.01, 0), dropplet.damage);
             dropplet.PowerUp();
@@ -58,35 +58,35 @@ namespace PixelClickerBackend.Tests
             Animental dropplet = new Dropplet(1, 1, player);
             Assert.False(dropplet.PowerUp());
 
-            player.gold = new ExpNumber(300, 0);
+            player.Stats.gold = new ExpNumber(300, 0);
             ExpNumber expectedGold = new ExpNumber(300, 0);
             // Upgrade 1 costs 10
             expectedGold.Subtract(10.0);
             Assert.True(dropplet.PowerUp());
             Assert.Equal(2, dropplet.powerLevel);
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
 
             // Upgrade 2 costs 11
             expectedGold.Subtract(11);
             Assert.True(dropplet.PowerUp());
             Assert.Equal(3, dropplet.powerLevel);
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
 
             // Upgrade 3 costs 12.1
-            player.gold = new ExpNumber(10, 0);
+            player.Stats.gold = new ExpNumber(10, 0);
             expectedGold = new ExpNumber(10, 0);
             Assert.False(dropplet.PowerUp());
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
 
             // Upgrade 3 costs 12.1
-            player.gold = new ExpNumber(12.1, 0);
+            player.Stats.gold = new ExpNumber(12.1, 0);
             expectedGold = new ExpNumber(12.1, 0);
             expectedGold.Subtract(12.1);
             Assert.True(dropplet.PowerUp());
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
 
             // Upgrade 4 costs 13.31 and 1 tier 1 sapphire
-            player.gold = new ExpNumber(200, 0);
+            player.Stats.gold = new ExpNumber(200, 0);
             expectedGold = new ExpNumber(200, 0);
             expectedGold.Subtract(13.31);
             player.AddGems(1, 1, GemType.Emerald);
@@ -95,25 +95,25 @@ namespace PixelClickerBackend.Tests
             Assert.False(dropplet.PowerUp());
             player.AddGems(1, 1, GemType.Sapphire);
             Assert.True(dropplet.PowerUp());
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
             Assert.Equal(0, player.GetGemCount(1, GemType.Sapphire));
             Assert.Equal(1, player.GetGemCount(1, GemType.Ruby));
             Assert.Equal(1, player.GetGemCount(1, GemType.Topaz));
             Assert.Equal(1, player.GetGemCount(1, GemType.Emerald));
 
             // Upgrade 5 costs 14.641 gold
-            player.gold = new ExpNumber(15, 0);
+            player.Stats.gold = new ExpNumber(15, 0);
             expectedGold = new ExpNumber(15, 0);
             expectedGold.Subtract(GetPowerUpPrice(dropplet.powerLevel));
             Assert.True(dropplet.PowerUp());
-            Assert.Equal(expectedGold, player.gold);
+            Assert.Equal(expectedGold, player.Stats.gold);
         }
 
         [Fact]
         public void TestPowerUpGems()
         {
             Player player = new Player();
-            player.gold = new ExpNumber(500, 20);
+            player.Stats.gold = new ExpNumber(500, 20);
             Random random = new Random();
             Animental dropplet = new Dropplet(random.Next(1, 100), 3, player);
             Assert.True(dropplet.PowerUp()); // Can do level 3 because it doesn't require any gems. 
@@ -128,7 +128,7 @@ namespace PixelClickerBackend.Tests
             Assert.Equal(0, player.GetGemCount(2, GemType.Sapphire));
 
             player = new Player();
-            player.gold = new ExpNumber(5.0, 400);
+            player.Stats.gold = new ExpNumber(5.0, 400);
             dropplet = new Dropplet(1, 14, player);
             Assert.False(dropplet.PowerUp()); // Level 14 powerup requires 3 tier 1 gems.
             player.AddGems(1, 3, GemType.Sapphire);

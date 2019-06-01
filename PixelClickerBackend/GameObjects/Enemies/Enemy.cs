@@ -1,8 +1,11 @@
 using System;
+using System.Numerics;
 
 namespace PixelClickerBackend {
 
     public class Enemy {
+
+
         private Elements _elementalType;
         public Elements ElementalType {
             get { return _elementalType; }
@@ -23,17 +26,21 @@ namespace PixelClickerBackend {
 
         private ExpNumber _health;
 
-        public ExpNumber Health {
-            get { return _health; }
-            set { _health = value; }
+        private ExpNumber Health {
+            get { return _health;}
         }
 
-        private ExpNumber _xp;
+        public ExpNumber GetHealth(){
+            return _health.Clone();
+        }
 
-        public ExpNumber Xp {
+        private BigInteger _xp;
+
+        public BigInteger Xp {
             get { return _xp; }
             set { _xp = value; }
         }
+
 
         public Enemy(int level){
             if (level <= 0)
@@ -50,22 +57,37 @@ namespace PixelClickerBackend {
             ExpNumber scalingFactor = new ExpNumber(Level, 0);
             scalingFactor.Pow(2);
             baseHealth.Multiply(scalingFactor);
-            this.Health = baseHealth;
+            this._health = baseHealth;
         }
 
         private void SetXp(){
-            ExpNumber baseXp = new ExpNumber(5, 0);
-            ExpNumber scalingFactor = new ExpNumber(Level, 0);
-            scalingFactor.Pow(2);
-            baseXp.Multiply(scalingFactor);
+            BigInteger baseXp = new BigInteger(5);
+            BigInteger scalingFactor = new BigInteger(Level);
+            scalingFactor = BigInteger.Pow(Level, 2);
+            baseXp = BigInteger.Multiply(baseXp, scalingFactor);
             this.Xp = baseXp;
         }
 
         public void DealDamage(ExpNumber damage, Player source, Elements damageType) {
             this.Health.Subtract(damage);
             if (!this.Health.IsPositive()){
-                this.Health = ExpNumber.ZERO;
-                IsDead = true;
+                OnDeath(source);
+            }
+        }
+
+        private void OnDeath(Player killer){
+            this._health = ExpNumber.ZERO;
+            IsDead = true;
+            DistributeXpAcrossPlayersAnimentals(killer);
+        }
+
+        private void DistributeXpAcrossPlayersAnimentals(Player killer){
+            int animentalTeamSize = killer.Stats.AnimentalTeam.Count;
+            if (animentalTeamSize == 0)
+                return;
+            BigInteger xpPerAnimental = BigInteger.Divide(this.Xp, animentalTeamSize);
+            foreach(Animental animental in killer.Stats.AnimentalTeam){
+                animental.AddXp(xpPerAnimental);
             }
         }
     }

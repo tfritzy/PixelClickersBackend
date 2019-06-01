@@ -12,12 +12,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.passiveNatureDPS.Add((ExpNumber)GetEffectQuantity());
+            player.Stats.passiveNatureDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            player.passiveNatureDPS.Subtract((ExpNumber)GetEffectQuantity());
+            player.Stats.passiveNatureDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

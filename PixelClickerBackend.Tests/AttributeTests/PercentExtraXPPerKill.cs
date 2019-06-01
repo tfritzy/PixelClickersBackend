@@ -20,10 +20,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new PercentExtraXPPerKillAttribute(startTier+1);
             Assert.Equal(new BigInteger(0),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -36,10 +36,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new PercentExtraXPPerKillAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(new BigInteger(0),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -48,13 +48,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new PercentExtraXPPerKillAttribute(i);
                 Assert.Equal(new BigInteger(0),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new PercentExtraXPPerKillAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.percentExtraXPPerKill);
+                        testPlayer.Stats.percentExtraXPPerKill);
             
             }
         }
@@ -69,7 +69,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(applyFormula(1), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(1), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(1), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(applyFormula(2), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(2), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(2), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(applyFormula(4), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(4), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(4), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(applyFormula(5), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(5), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(5), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(applyFormula(10), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(applyFormula(100), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(100), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(100), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         [Fact]
@@ -177,9 +177,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.percentExtraXPPerKill);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(new BigInteger(0), testPlayer.percentExtraXPPerKill);
+            Assert.Equal(new BigInteger(0), testPlayer.Stats.percentExtraXPPerKill);
         }
 
         private BigInteger applyFormula(int tier){

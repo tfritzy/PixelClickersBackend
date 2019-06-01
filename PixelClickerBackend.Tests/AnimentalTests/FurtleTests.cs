@@ -26,7 +26,7 @@ namespace PixelClickerBackend
             Assert.Equal(new ExpNumber(3.5, 0), furtle.damage);
             furtle.AddXp(100);
             Assert.Equal(new ExpNumber(3.92, 0), furtle.damage);
-            player.gold = new ExpNumber(3, 304923);
+            player.Stats.gold = new ExpNumber(3, 304923);
             furtle.PowerUp();
             Assert.Equal(new ExpNumber(3.92 * 1.011, 0), furtle.damage);
             furtle.PowerUp();

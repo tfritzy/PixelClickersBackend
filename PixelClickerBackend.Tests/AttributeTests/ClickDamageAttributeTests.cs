@@ -14,7 +14,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(4 * tier, 0);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(4 * tier, 0);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(4 * tier, 0);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(4 * tier, 0);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(4 * tier, 0);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace PixelClickerBackend.Tests
             ClickDamageAttribute cda = new ClickDamageAttribute(tier);
             ExpNumber expectedClickDamage = new ExpNumber(8.589934588, 9);
             cda.ApplyEffect(testPlayer);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace PixelClickerBackend.Tests
             }
             cda.ApplyEffect(testPlayer);
             ExpNumber expectedClickDamage = new ExpNumber((tier + numPowerUps) * 4, 0);
-            Assert.Equal(expectedClickDamage, testPlayer.clickDamage);
+            Assert.Equal(expectedClickDamage, testPlayer.Stats.clickDamage);
 
         }
 

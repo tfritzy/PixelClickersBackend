@@ -13,15 +13,15 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            BigInteger oldPlayerTeamDamage = player.teamDamageBonusPercent;
-            player.teamDamageBonusPercent = BigInteger.Add(oldPlayerTeamDamage,  
+            BigInteger oldPlayerTeamDamage = player.Stats.teamDamageBonusPercent;
+            player.Stats.teamDamageBonusPercent = BigInteger.Add(oldPlayerTeamDamage,  
                                                     (BigInteger)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            BigInteger oldPlayerTeamDamage = player.teamDamageBonusPercent;
-            player.teamDamageBonusPercent = BigInteger.Subtract(oldPlayerTeamDamage, 
+            BigInteger oldPlayerTeamDamage = player.Stats.teamDamageBonusPercent;
+            player.Stats.teamDamageBonusPercent = BigInteger.Subtract(oldPlayerTeamDamage, 
                                                     (BigInteger)GetEffectQuantity());
         }
 

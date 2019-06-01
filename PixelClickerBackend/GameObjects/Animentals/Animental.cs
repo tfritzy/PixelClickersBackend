@@ -83,13 +83,13 @@ namespace PixelClickerBackend
         }
 
         public bool PowerUp(){
-            if (player.gold.CompareTo(GetPowerUpPrice()) < 0)
+            if (player.Stats.gold.CompareTo(GetPowerUpPrice()) < 0)
                 return false;   
             if (player.GetGemCount(GetPowerUpGemTier(), GemType.Sapphire) < GetPowerUpGemQuantity()){
                 return false;
             }
             this.player.AddGems(GetPowerUpGemTier(), -GetPowerUpGemQuantity(), GemType.Sapphire);
-            player.gold.Subtract(GetPowerUpPrice());
+            player.Stats.gold.Subtract(GetPowerUpPrice());
             this.powerLevel += 1; 
             this.damage.Multiply(this.powerUpDamageScalingFactor);
             return true;

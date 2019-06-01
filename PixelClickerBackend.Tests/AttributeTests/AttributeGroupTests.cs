@@ -30,15 +30,15 @@ namespace PixelClickerBackend.Tests
             Assert.True(attrGroup.Insert(new NatureDamageAttribute(attributeTier)));
             attrGroup.MakeAllActive();
             ExpNumber expectedDamage = new ExpNumber(2.5,1);
-            Assert.Equal(expectedDamage, player.passiveEarthDPS);
-            Assert.Equal(expectedDamage, player.passiveFireDPS);
-            Assert.Equal(expectedDamage, player.passiveWaterDPS);
-            Assert.Equal(expectedDamage, player.passiveNatureDPS);
+            Assert.Equal(expectedDamage, player.Stats.passiveEarthDPS);
+            Assert.Equal(expectedDamage, player.Stats.passiveFireDPS);
+            Assert.Equal(expectedDamage, player.Stats.passiveWaterDPS);
+            Assert.Equal(expectedDamage, player.Stats.passiveNatureDPS);
             attrGroup.MakeAllInactive();
-            Assert.Equal(new ExpNumber(), player.passiveEarthDPS);
-            Assert.Equal(new ExpNumber(), player.passiveFireDPS);
-            Assert.Equal(new ExpNumber(), player.passiveWaterDPS);
-            Assert.Equal(new ExpNumber(), player.passiveNatureDPS);
+            Assert.Equal(new ExpNumber(), player.Stats.passiveEarthDPS);
+            Assert.Equal(new ExpNumber(), player.Stats.passiveFireDPS);
+            Assert.Equal(new ExpNumber(), player.Stats.passiveWaterDPS);
+            Assert.Equal(new ExpNumber(), player.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -48,9 +48,9 @@ namespace PixelClickerBackend.Tests
             CooldownReductionAttribute cdr = new CooldownReductionAttribute(4);
             group.Insert(cdr);
             group.MakeAllActive();
-            Assert.Equal((float)cdr.GetEffectQuantity(), player.cooldownReduction);
+            Assert.Equal((float)cdr.GetEffectQuantity(), player.Stats.cooldownReduction);
             cdr.LevelUp();
-            Assert.Equal((float)cdr.GetEffectQuantity(), player.cooldownReduction);
+            Assert.Equal((float)cdr.GetEffectQuantity(), player.Stats.cooldownReduction);
             
             
         }

@@ -46,10 +46,10 @@ namespace PixelClickerBackend.Tests
                     new PercentExtraXPPerKillAttribute(i);
                 CooldownReductionAttribute cdr = new CooldownReductionAttribute(i);
 
-                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveWaterDPS);
                
 
                 Gem s = new Sapphire(i, testPlayer);
@@ -65,10 +65,10 @@ namespace PixelClickerBackend.Tests
                 }
                 s.MakeAllActive();
 
-                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.passiveWaterDPS);
+                Assert.Equal((ExpNumber)wda.GetEffectQuantity(), testPlayer.Stats.passiveWaterDPS);
                 Assert.Equal((BigInteger)pxp.GetEffectQuantity(),
-                    testPlayer.percentExtraXPPerKill);
-                Assert.Equal((float)cdr.GetEffectQuantity(), (testPlayer.cooldownReduction));
+                    testPlayer.Stats.percentExtraXPPerKill);
+                Assert.Equal((float)cdr.GetEffectQuantity(), (testPlayer.Stats.cooldownReduction));
 
 
             }

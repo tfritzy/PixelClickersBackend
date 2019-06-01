@@ -45,10 +45,10 @@ namespace PixelClickerBackend.Tests
                 DamageIncreasePercentageAttribute damageIncrease =
                     new DamageIncreasePercentageAttribute(i);
 
-                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveWaterDPS);
 
                 Gem topaz = new Topaz(i, testPlayer);
 
@@ -64,11 +64,11 @@ namespace PixelClickerBackend.Tests
                 }
                 topaz.MakeAllActive();
 
-                Assert.Equal(testPlayer.passiveEarthDPS,
+                Assert.Equal(testPlayer.Stats.passiveEarthDPS,
                     (ExpNumber)earthDamage.GetEffectQuantity());
-                Assert.Equal(testPlayer.critHitChance,
+                Assert.Equal(testPlayer.Stats.critHitChance,
                     (float)critHitChance.GetEffectQuantity());
-                Assert.Equal(testPlayer.damageIncreasePercentage,
+                Assert.Equal(testPlayer.Stats.damageIncreasePercentage,
                     (BigInteger)damageIncrease.GetEffectQuantity());
             }
         }

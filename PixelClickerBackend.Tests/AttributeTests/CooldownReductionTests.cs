@@ -20,10 +20,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new CooldownReductionAttribute(startTier+1);
             Assert.Equal(0f,
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -36,10 +36,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new CooldownReductionAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(0f,
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -48,13 +48,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new CooldownReductionAttribute(i);
                 Assert.Equal(0f,
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new CooldownReductionAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.cooldownReduction);
+                        testPlayer.Stats.cooldownReduction);
             
             }
         }
@@ -64,7 +64,7 @@ namespace PixelClickerBackend
 
             Random random = new Random();
             Player testPlayer = new Player();
-            float oldCDR = testPlayer.cooldownReduction;
+            float oldCDR = testPlayer.Stats.cooldownReduction;
             int startTier = random.Next(1, 140);
             Attribute attr = new CooldownReductionAttribute(startTier);
             int numUpgrades = random.Next(0, 100);
@@ -76,7 +76,7 @@ namespace PixelClickerBackend
                                                         startTier + numUpgrades);
             Assert.Equal(startTier + numUpgrades, attr.tier);
             Assert.Equal(expectedCDR.GetEffectQuantity(), 
-                        testPlayer.cooldownReduction - oldCDR);
+                        testPlayer.Stats.cooldownReduction - oldCDR);
 
 
         }
@@ -90,7 +90,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(1f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(1f, testPlayer.cooldownReduction);
+            Assert.Equal(1f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(2f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(2f, testPlayer.cooldownReduction);
+            Assert.Equal(2f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(3f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(3f, testPlayer.cooldownReduction);
+            Assert.Equal(3f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(4f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(4f, testPlayer.cooldownReduction);
+            Assert.Equal(4f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(5f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(5f, testPlayer.cooldownReduction);
+            Assert.Equal(5f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(10f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(10f, testPlayer.cooldownReduction);
+            Assert.Equal(10f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(100f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(100f, testPlayer.cooldownReduction);
+            Assert.Equal(100f, testPlayer.Stats.cooldownReduction);
         }
 
 
@@ -179,7 +179,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(3f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(3f, testPlayer.cooldownReduction);
+            Assert.Equal(3f, testPlayer.Stats.cooldownReduction);
         }
 
         [Fact]
@@ -199,9 +199,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(10f, testPlayer.cooldownReduction);
+            Assert.Equal(10f, testPlayer.Stats.cooldownReduction);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(0f, testPlayer.cooldownReduction);
+            Assert.Equal(0f, testPlayer.Stats.cooldownReduction);
         }
 
 

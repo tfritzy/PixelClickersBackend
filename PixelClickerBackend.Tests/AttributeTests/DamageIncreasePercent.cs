@@ -21,10 +21,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new DamageIncreasePercentageAttribute(startTier+1);
             Assert.Equal(new BigInteger(0),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -37,10 +37,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new DamageIncreasePercentageAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(new BigInteger(0),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -49,13 +49,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new DamageIncreasePercentageAttribute(i);
                 Assert.Equal(new BigInteger(0),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new DamageIncreasePercentageAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.damageIncreasePercentage);
+                        testPlayer.Stats.damageIncreasePercentage);
             
             }
         }
@@ -70,7 +70,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(applyFormula(1), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(1), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(1), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(applyFormula(2), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(2), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(2), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(applyFormula(4), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(4), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(4), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(applyFormula(5), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(5), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(5), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(applyFormula(10), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(applyFormula(100), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(100), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(100), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(applyFormula(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(3), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(3), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -178,9 +178,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(applyFormula(10), testPlayer.damageIncreasePercentage);
+            Assert.Equal(applyFormula(10), testPlayer.Stats.damageIncreasePercentage);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(new BigInteger(0), testPlayer.damageIncreasePercentage);
+            Assert.Equal(new BigInteger(0), testPlayer.Stats.damageIncreasePercentage);
         }
 
         [Fact]
@@ -192,7 +192,7 @@ namespace PixelClickerBackend
             Assert.Equal(int.MaxValue, attr.tier);
             Assert.Equal(BigInteger.Parse("64424509410"), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(BigInteger.Parse("64424509410"), testPlayer.damageIncreasePercentage);
+            Assert.Equal(BigInteger.Parse("64424509410"), testPlayer.Stats.damageIncreasePercentage);
         }
 
         private BigInteger applyFormula(int tier){

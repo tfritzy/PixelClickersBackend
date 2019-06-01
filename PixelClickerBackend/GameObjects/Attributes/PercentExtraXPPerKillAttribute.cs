@@ -12,15 +12,15 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.percentExtraXPPerKill = 
-            BigInteger.Add(player.percentExtraXPPerKill, 
+            player.Stats.percentExtraXPPerKill = 
+            BigInteger.Add(player.Stats.percentExtraXPPerKill, 
                             (BigInteger)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            player.percentExtraXPPerKill = 
-            BigInteger.Subtract(player.percentExtraXPPerKill, 
+            player.Stats.percentExtraXPPerKill = 
+            BigInteger.Subtract(player.Stats.percentExtraXPPerKill, 
                                 (BigInteger)GetEffectQuantity());
         }
 

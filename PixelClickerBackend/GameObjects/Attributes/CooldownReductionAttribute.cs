@@ -13,12 +13,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.cooldownReduction += (float)GetEffectQuantity();
+            player.Stats.cooldownReduction += (float)GetEffectQuantity();
         }
 
         protected override void Remove(Player player)
         {
-            player.cooldownReduction -= (float)GetEffectQuantity();
+            player.Stats.cooldownReduction -= (float)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()

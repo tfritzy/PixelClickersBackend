@@ -12,12 +12,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.gemDropChance += (float)GetEffectQuantity();
+            player.Stats.gemDropChance += (float)GetEffectQuantity();
         }
 
         protected override void Remove(Player player)
         {
-            player.gemDropChance -= (float)GetEffectQuantity();
+            player.Stats.gemDropChance -= (float)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()

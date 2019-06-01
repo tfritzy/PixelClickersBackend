@@ -93,17 +93,17 @@ namespace PixelClickerBackend.Tests
                     new GemDropChanceAttribute(i);
                 EnemyLifeReductionAttribute elr = new EnemyLifeReductionAttribute(i);
 
-                Assert.Equal(new ExpNumber(), testPlayer.passiveNatureDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveEarthDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveFireDPS);
-                Assert.Equal(new ExpNumber(), testPlayer.passiveWaterDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveNatureDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveEarthDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveFireDPS);
+                Assert.Equal(new ExpNumber(), testPlayer.Stats.passiveWaterDPS);
                
                 Gem s = new Emerald(i, testPlayer);
                 s.MakeAllActive();
 
-                Assert.Equal(testPlayer.passiveNatureDPS, (ExpNumber)nda.GetEffectQuantity());
-                Assert.Equal(testPlayer.gemDropChance, (float)gdc.GetEffectQuantity());
-                Assert.Equal(testPlayer.enemyHealthPercentageReduction, (float)elr.GetEffectQuantity());
+                Assert.Equal(testPlayer.Stats.passiveNatureDPS, (ExpNumber)nda.GetEffectQuantity());
+                Assert.Equal(testPlayer.Stats.gemDropChance, (float)gdc.GetEffectQuantity());
+                Assert.Equal(testPlayer.Stats.enemyHealthPercentageReduction, (float)elr.GetEffectQuantity());
             }
         }
 

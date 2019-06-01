@@ -13,12 +13,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            player.passiveWaterDPS.Add((ExpNumber)GetEffectQuantity());
+            player.Stats.passiveWaterDPS.Add((ExpNumber)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            player.passiveWaterDPS.Subtract((ExpNumber)GetEffectQuantity());
+            player.Stats.passiveWaterDPS.Subtract((ExpNumber)GetEffectQuantity());
         }
 
     }

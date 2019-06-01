@@ -14,12 +14,12 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-             player.critHitChance += (float)GetEffectQuantity();
+             player.Stats.critHitChance += (float)GetEffectQuantity();
         }
 
         protected override void Remove(Player player)
         {
-            player.critHitChance -= (float)GetEffectQuantity();
+            player.Stats.critHitChance -= (float)GetEffectQuantity();
         }
 
         public override object GetEffectQuantity()

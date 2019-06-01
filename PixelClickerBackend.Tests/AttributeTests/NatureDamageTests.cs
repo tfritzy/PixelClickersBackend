@@ -21,10 +21,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new NatureDamageAttribute(startTier+1);
             Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -37,10 +37,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new NatureDamageAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -49,13 +49,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new NatureDamageAttribute(i);
                 Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new NatureDamageAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveNatureDPS);
+                        testPlayer.Stats.passiveNatureDPS);
             
             }
         }
@@ -71,7 +71,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(GetExpectedDamage(1), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(1), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(1), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(GetExpectedDamage(2), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(2), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(2), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(GetExpectedDamage(4), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(4), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(4), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(GetExpectedDamage(5), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(5), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(5), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(GetExpectedDamage(10), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(GetExpectedDamage(100), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(100), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(100), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -179,9 +179,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.Stats.passiveNatureDPS);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(0), testPlayer.passiveNatureDPS);
+            Assert.Equal(GetExpectedDamage(0), testPlayer.Stats.passiveNatureDPS);
         }
 
         [Fact]
@@ -193,7 +193,7 @@ namespace PixelClickerBackend
             Assert.Equal(int.MaxValue, attr.tier);
             Assert.Equal(new ExpNumber(4.611, 18), attr.GetEffectQuantity()); // should be 4611686014132420609
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(new ExpNumber(4.611, 18), testPlayer.passiveNatureDPS); // should be 4611686014132420609
+            Assert.Equal(new ExpNumber(4.611, 18), testPlayer.Stats.passiveNatureDPS); // should be 4611686014132420609
         }
 
         private ExpNumber GetExpectedDamage(int tier){

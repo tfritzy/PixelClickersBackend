@@ -21,10 +21,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new CritHitChanceAttribute(startTier+1);
             Assert.Equal(0f,
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -37,10 +37,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new CritHitChanceAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(0f,
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -49,13 +49,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new CritHitChanceAttribute(i);
                 Assert.Equal(0f,
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new CritHitChanceAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.critHitChance);
+                        testPlayer.Stats.critHitChance);
             
             }
         }
@@ -72,7 +72,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(1f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(1f, testPlayer.critHitChance);
+            Assert.Equal(1f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(2f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(2f, testPlayer.critHitChance);
+            Assert.Equal(2f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(3f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(3f, testPlayer.critHitChance);
+            Assert.Equal(3f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(4f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(4f, testPlayer.critHitChance);
+            Assert.Equal(4f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(5f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(5f, testPlayer.critHitChance);
+            Assert.Equal(5f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(10f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(10f, testPlayer.critHitChance);
+            Assert.Equal(10f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(100f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(100f, testPlayer.critHitChance);
+            Assert.Equal(100f, testPlayer.Stats.critHitChance);
         }
         #endregion
 
@@ -162,7 +162,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(3f, attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(3f, testPlayer.critHitChance);
+            Assert.Equal(3f, testPlayer.Stats.critHitChance);
         }
 
         [Fact]
@@ -182,9 +182,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(10f, testPlayer.critHitChance);
+            Assert.Equal(10f, testPlayer.Stats.critHitChance);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(0f, testPlayer.critHitChance);
+            Assert.Equal(0f, testPlayer.Stats.critHitChance);
         }
         #endregion
     }

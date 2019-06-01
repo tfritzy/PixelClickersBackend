@@ -12,15 +12,15 @@ namespace PixelClickerBackend
 
         protected override void Apply(Player player)
         {
-            BigInteger oldPlayerGoldFind = player.extraGoldFindPercentage;
-            player.extraGoldFindPercentage = BigInteger.Add(oldPlayerGoldFind,
+            BigInteger oldPlayerGoldFind = player.Stats.extraGoldFindPercentage;
+            player.Stats.extraGoldFindPercentage = BigInteger.Add(oldPlayerGoldFind,
                                                     (BigInteger)GetEffectQuantity());
         }
 
         protected override void Remove(Player player)
         {
-            BigInteger oldPlayerGoldFind = player.extraGoldFindPercentage;
-            player.extraGoldFindPercentage = BigInteger.Subtract(oldPlayerGoldFind,
+            BigInteger oldPlayerGoldFind = player.Stats.extraGoldFindPercentage;
+            player.Stats.extraGoldFindPercentage = BigInteger.Subtract(oldPlayerGoldFind,
                                                     (BigInteger)GetEffectQuantity());
         }
 

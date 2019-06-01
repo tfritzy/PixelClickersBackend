@@ -20,10 +20,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new WaterDamageAttribute(startTier+1);
             Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
             attr.ApplyEffect(testPlayer);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -36,10 +36,10 @@ namespace PixelClickerBackend
             Assert.Equal(startTier + 1, attr.tier);
             Attribute testAttr = new WaterDamageAttribute(startTier+1);
             Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
             attr.RemoveEffect(testPlayer);
             Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -48,13 +48,13 @@ namespace PixelClickerBackend
                 Player testPlayer = new Player();
                 Attribute attr = new WaterDamageAttribute(i);
                 Assert.Equal(GetExpectedDamage(0),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
                 attr.ApplyEffect(testPlayer);
                 attr.LevelUp();
                 Assert.Equal(i + 1, attr.tier);
                 Attribute testAttr = new WaterDamageAttribute(i+1);
                 Assert.Equal(testAttr.GetEffectQuantity(),
-                        testPlayer.passiveWaterDPS);
+                        testPlayer.Stats.passiveWaterDPS);
             
             }
         }
@@ -69,7 +69,7 @@ namespace PixelClickerBackend
             Assert.Equal(1, attr.tier);
             Assert.Equal(GetExpectedDamage(1), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(1), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(1), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace PixelClickerBackend
             Assert.Equal(2, attr.tier);
             Assert.Equal(GetExpectedDamage(2), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(2), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(2), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace PixelClickerBackend
             Assert.Equal(3, attr.tier);
             Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace PixelClickerBackend
             Assert.Equal(4, attr.tier);
             Assert.Equal(GetExpectedDamage(4), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(4), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(4), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace PixelClickerBackend
             Assert.Equal(5, attr.tier);
             Assert.Equal(GetExpectedDamage(5), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(5), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(5), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace PixelClickerBackend
             Assert.Equal(10, attr.tier);
             Assert.Equal(GetExpectedDamage(10), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace PixelClickerBackend
             Assert.Equal(100, attr.tier);
             Assert.Equal(GetExpectedDamage(100), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(100), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(100), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace PixelClickerBackend
             Assert.Equal(int.MaxValue, attr.tier);
             Assert.Equal(new ExpNumber(4.611, 18), attr.GetEffectQuantity()); // should be 4611686014132420609
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(new ExpNumber(4.611, 18), testPlayer.passiveWaterDPS); // should be 4611686014132420609
+            Assert.Equal(new ExpNumber(4.611, 18), testPlayer.Stats.passiveWaterDPS); // should be 4611686014132420609
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace PixelClickerBackend
             Assert.False(attr.IsActive(testPlayer));
             Assert.Equal(GetExpectedDamage(3), attr.GetEffectQuantity());
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(3), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(3), testPlayer.Stats.passiveWaterDPS);
         }
 
         [Fact]
@@ -189,9 +189,9 @@ namespace PixelClickerBackend
                     attr.RemoveEffect(testPlayer);
             }
             attr.ApplyEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(10), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(10), testPlayer.Stats.passiveWaterDPS);
             attr.RemoveEffect(testPlayer);
-            Assert.Equal(GetExpectedDamage(0), testPlayer.passiveWaterDPS);
+            Assert.Equal(GetExpectedDamage(0), testPlayer.Stats.passiveWaterDPS);
         }
 
         private ExpNumber GetExpectedDamage(int tier){

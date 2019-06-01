@@ -96,9 +96,9 @@ namespace PixelClickerBackend
             this.significand -= subtractValue.significand /
                                 Math.Pow(10.0, this.magnitude -
                                         subtractValue.magnitude);
-
-            ShiftSignificandIntoMagnitude();
             this.significand = Round(significand);
+            ShiftSignificandIntoMagnitude();
+            
         }
 
 
@@ -122,8 +122,8 @@ namespace PixelClickerBackend
                                 Math.Pow(10.0, this.magnitude -
                                 subtractValue.magnitude);
 
-            ShiftSignificandIntoMagnitude();
             this.significand = Round(significand);
+            ShiftSignificandIntoMagnitude();
         }
 
         public override bool Equals(Object obj)
